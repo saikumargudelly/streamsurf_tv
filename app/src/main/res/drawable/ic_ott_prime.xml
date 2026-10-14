@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Dark rounded badge -->
+    <path
+        android:fillColor="#00A8E1"
+        android:pathData="M10,8h28a4,4 0 0,1 4,4v24a4,4 0 0,1 -4,4h-28a4,4 0 0,1 -4,-4v-24a4,4 0 0,1 4,-4z" />
+    <!-- Prime play triangle -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M20,16l12,8 -12,8z" />
+</vector>

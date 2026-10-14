@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Peacock Vibrant Multi-Color Dots/Plumage -->
+    <!-- Yellow dot -->
+    <path
+        android:fillColor="#FFD600"
+        android:pathData="M16,18 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <!-- Orange dot -->
+    <path
+        android:fillColor="#FF6D00"
+        android:pathData="M24,14 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <!-- Cyan dot -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M32,18 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <!-- Green dot -->
+    <path
+        android:fillColor="#00E676"
+        android:pathData="M18,27 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <!-- Purple dot -->
+    <path
+        android:fillColor="#AA00FF"
+        android:pathData="M30,27 m-3.5,0 a3.5,3.5 0 1,0 7,0 a3.5,3.5 0 1,0 -7,0" />
+    <!-- Center beak -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M24,24 L22,34 L26,34 Z" />
+</vector>

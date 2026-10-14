@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Disney+ Iconic Arc and Star -->
+    <!-- Curved shooting star trail arc -->
+    <path
+        android:fillColor="#00B5E2"
+        android:pathData="M6,36 C14,14 34,10 42,18 C32,12 16,18 10,38 Z" />
+    <!-- 4-pointed sparkle star -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M38,12 L39,17 L44,18 L39,19 L38,24 L37,19 L32,18 L37,17 Z" />
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M24,24 L25,27 L28,28 L25,29 L24,32 L23,29 L20,28 L23,27 Z" />
+</vector>

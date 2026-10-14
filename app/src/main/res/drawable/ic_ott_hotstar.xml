@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Blue rounded background badge -->
+    <path
+        android:fillColor="#0C1E3C"
+        android:pathData="M10,8h28a4,4 0 0,1 4,4v24a4,4 0 0,1 -4,4h-28a4,4 0 0,1 -4,-4v-24a4,4 0 0,1 4,-4z" />
+    <!-- Golden Star -->
+    <path
+        android:fillColor="#FFC107"
+        android:pathData="M24,14l3.1,6.3 6.9,1 -5,4.9 1.2,6.8 -6.2,-3.3 -6.2,3.3 1.2,-6.8 -5,-4.9 6.9,-1z" />
+</vector>

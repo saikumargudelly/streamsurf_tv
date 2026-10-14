@@ -1,0 +1,18 @@
+<resources>
+    <string name="app_name">StreamSurf TV</string>
+    <string name="app_description">Fast, Ad-Free Video Streaming &amp; TV Web Browser</string>
+    <string name="search_hint">Enter URL or search…</string>
+    <string name="btn_go">Go</string>
+    <string name="home_title">StreamSurf TV</string>
+    <string name="section_quick_access">Quick Access</string>
+    <string name="nav_back">Back</string>
+    <string name="nav_forward">Forward</string>
+    <string name="nav_reload">Reload</string>
+    <string name="nav_home">Home</string>
+    <string name="nav_bookmark">Bookmark</string>
+    <string name="bookmark_added">Added to Bookmarks</string>
+    <string name="bookmark_removed">Removed from Bookmarks</string>
+    <string name="my_bookmarks">MY BOOKMARKS</string>
+    <string name="ssl_error_warning">Security Warning: The SSL certificate for this site is invalid or untrusted. Navigation blocked.</string>
+    <string name="renderer_crashed_message">The webpage rendering process terminated. The page has been reloaded.</string>
+</resources>

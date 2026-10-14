@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- MAX Icon (Deep Blue & White) -->
+    <!-- Stylized "M" -->
+    <path
+        android:fillColor="#002BE7"
+        android:pathData="M8,16 L14,16 L18,25 L22,16 L28,16 L28,32 L23,32 L23,23 L19.5,31 L16.5,31 L13,23 L13,32 L8,32 Z" />
+    <!-- Stylized "A" -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M27,24 L31,16 L37,16 L41,24 L41,32 L36,32 L36,28 L32,28 L32,32 L27,32 Z M33,24 L35,24 L34,20 Z" />
+</vector>

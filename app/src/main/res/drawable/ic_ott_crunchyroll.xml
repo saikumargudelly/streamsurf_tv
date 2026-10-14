@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Crunchyroll Vibrant Orange Anime Eye -->
+    <path
+        android:fillColor="#F47521"
+        android:pathData="M24,8 C15.2,8 8,15.2 8,24 C8,32.8 15.2,40 24,40 C32.8,40 40,32.8 40,24 C40,15.2 32.8,8 24,8 Z M22,34 C16.5,34 12,29.5 12,24 C12,18.5 16.5,14 22,14 C27.5,14 32,18.5 32,24 C32,29.5 27.5,34 22,34 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M23,17 C19.1,17 16,20.1 16,24 C16,27.9 19.1,31 23,31 C26.9,31 30,27.9 30,24 C30,20.1 26.9,17 23,17 Z" />
+    <path
+        android:fillColor="#F47521"
+        android:pathData="M24,20 C21.8,20 20,21.8 20,24 C20,26.2 21.8,28 24,28 C26.2,28 28,26.2 28,24 C28,21.8 26.2,20 24,20 Z" />
+</vector>

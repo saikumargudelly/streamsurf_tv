@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+
+    <!-- Minimal TV Antennas -->
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M24,13 L16,5" />
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M24,13 L32,5" />
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M16,5 A1.5,1.5 0 1,1 15.99,5 Z" />
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M32,5 A1.5,1.5 0 1,1 31.99,5 Z" />
+
+    <!-- TV Screen Outer Bezel -->
+    <path
+        android:fillColor="#161E2E"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="1.8"
+        android:pathData="M11,13 L37,13 A4,4 0 0,1 41,17 L41,35 A4,4 0 0,1 37,39 L11,39 A4,4 0 0,1 7,35 L7,17 A4,4 0 0,1 11,13 Z" />
+
+    <!-- TV Display Inner Area -->
+    <path
+        android:fillColor="#0B0F17"
+        android:pathData="M12,15 L36,15 A2,2 0 0,1 38,17 L38,33 A2,2 0 0,1 36,35 L12,35 A2,2 0 0,1 10,33 L10,17 A2,2 0 0,1 12,15 Z" />
+
+    <!-- Minimal Surf Wave Crest inside Screen -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M13,32 C16,28 20,24 25,23 C29,22 31,24 33,27 C30,26 27,27 25,29 C23,31 22,33 17,33 Z" />
+
+    <!-- Play Arrow inside Wave -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M22,20 L30,25 L22,30 Z" />
+
+    <!-- TV Stand Legs -->
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M14,39 L11,43" />
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="1.8"
+        android:strokeLineCap="round"
+        android:pathData="M34,39 L37,43" />
+</vector>

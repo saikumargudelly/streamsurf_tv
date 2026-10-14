@@ -1,0 +1,69 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="108dp"
+    android:height="108dp"
+    android:viewportWidth="108"
+    android:viewportHeight="108">
+
+    <!-- Background squircle -->
+    <path
+        android:fillColor="#0B0E14"
+        android:pathData="M0,0h108v108h-108z" />
+
+    <!-- Ambient Dark Tile -->
+    <path
+        android:fillColor="#151C2C"
+        android:pathData="M18,12 L90,12 A16,16 0 0,1 106,28 L106,80 A16,16 0 0,1 90,96 L18,96 A16,16 0 0,1 2,80 L2,28 A16,16 0 0,1 18,12 Z" />
+
+    <!-- TV Rabbit-Ear Antennas -->
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,32 L36,14" />
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M54,32 L72,14" />
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M36,14 A3,3 0 1,1 35.99,14 Z" />
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M72,14 A3,3 0 1,1 71.99,14 Z" />
+
+    <!-- TV Screen Bezel -->
+    <path
+        android:fillColor="#1A2338"
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3"
+        android:pathData="M26,32 L82,32 A8,8 0 0,1 90,40 L90,78 A8,8 0 0,1 82,86 L26,86 A8,8 0 0,1 18,78 L18,40 A8,8 0 0,1 26,32 Z" />
+
+    <!-- TV Screen Glass -->
+    <path
+        android:fillColor="#0B0F17"
+        android:pathData="M28,36 L80,36 A4,4 0 0,1 84,40 L84,74 A4,4 0 0,1 80,78 L28,78 A4,4 0 0,1 24,74 L24,40 A4,4 0 0,1 28,36 Z" />
+
+    <!-- Minimal Surf Wave inside TV Screen -->
+    <path
+        android:fillColor="#00E5FF"
+        android:pathData="M30,72 C36,64 45,56 55,54 C65,52 70,56 74,62 C68,60 62,62 57,66 C53,70 51,74 38,74 Z" />
+
+    <!-- Minimal Play Triangle inside Wave -->
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M48,46 L66,57 L48,68 Z" />
+
+    <!-- Minimal TV Legs -->
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M32,86 L26,94" />
+    <path
+        android:strokeColor="#00E5FF"
+        android:strokeWidth="3"
+        android:strokeLineCap="round"
+        android:pathData="M76,86 L82,94" />
+</vector>

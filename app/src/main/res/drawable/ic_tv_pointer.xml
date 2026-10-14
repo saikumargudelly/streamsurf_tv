@@ -1,0 +1,17 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="28dp"
+    android:height="28dp"
+    android:viewportWidth="28"
+    android:viewportHeight="28">
+    <!-- Outer shadow / high-contrast dark border for visibility on white pages -->
+    <path
+        android:fillColor="#0B0E14"
+        android:strokeColor="#0B0E14"
+        android:strokeWidth="1.5"
+        android:pathData="M3,3 L3,23 L9,17 L14,26 L17,24 L12,15 L19,15 Z" />
+    <!-- Glowing cyan pointer arrow -->
+    <path
+        android:fillColor="@color/accent_primary"
+        android:pathData="M4,4 L4,21 L9,16 L14,24 L16,23 L11,15 L17,15 Z" />
+</vector>

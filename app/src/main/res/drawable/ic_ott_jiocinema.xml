@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- JioCinema Vibrant Magenta Play Badge -->
+    <path
+        android:fillColor="#E91E63"
+        android:pathData="M24,6 C14.1,6 6,14.1 6,24 C6,33.9 14.1,42 24,42 C33.9,42 42,33.9 42,24 C42,14.1 33.9,6 24,6 Z" />
+    <path
+        android:fillColor="#FFFFFF"
+        android:pathData="M19,16 L33,24 L19,32 Z" />
+</vector>

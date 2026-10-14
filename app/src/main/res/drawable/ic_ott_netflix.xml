@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="48dp"
+    android:height="48dp"
+    android:viewportWidth="48"
+    android:viewportHeight="48">
+    <!-- Left red ribbon -->
+    <path
+        android:fillColor="#E50914"
+        android:pathData="M14,6h6v36h-6z" />
+    <!-- Right red ribbon -->
+    <path
+        android:fillColor="#E50914"
+        android:pathData="M28,6h6v36h-6z" />
+    <!-- Diagonal red ribbon -->
+    <path
+        android:fillColor="#B81D24"
+        android:pathData="M14,6l14,36h6l-14,-36z" />
+</vector>
