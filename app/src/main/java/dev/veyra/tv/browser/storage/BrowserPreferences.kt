@@ -18,6 +18,8 @@ object BrowserPreferences {
     private const val KEY_ALLOWLISTED_HOSTS = "pref_allowlisted_hosts"
     private const val KEY_ZOOM_LEVEL = "pref_zoom_level"
     private const val KEY_BOOKMARKS = "pref_bookmarks_json"
+    private const val KEY_NEXTDNS_ENABLED = "pref_nextdns_enabled"
+    private const val KEY_NEXTDNS_INPUT = "pref_nextdns_input"
     const val DEFAULT_ZOOM_LEVEL = 115
 
     private fun getPrefs(context: Context): SharedPreferences {
@@ -84,6 +86,24 @@ object BrowserPreferences {
 
     fun clearAllowlist(context: Context) {
         getPrefs(context).edit().remove(KEY_ALLOWLISTED_HOSTS).apply()
+    }
+
+    // --- NextDNS Management ---
+
+    fun isNextDnsEnabled(context: Context): Boolean {
+        return getPrefs(context).getBoolean(KEY_NEXTDNS_ENABLED, false)
+    }
+
+    fun setNextDnsEnabled(context: Context, enabled: Boolean) {
+        getPrefs(context).edit().putBoolean(KEY_NEXTDNS_ENABLED, enabled).apply()
+    }
+
+    fun getNextDnsInput(context: Context): String {
+        return getPrefs(context).getString(KEY_NEXTDNS_INPUT, "") ?: ""
+    }
+
+    fun setNextDnsInput(context: Context, input: String) {
+        getPrefs(context).edit().putString(KEY_NEXTDNS_INPUT, input.trim()).apply()
     }
 
     // --- Bookmarks Management ---

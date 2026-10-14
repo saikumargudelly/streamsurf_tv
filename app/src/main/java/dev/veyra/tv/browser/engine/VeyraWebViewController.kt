@@ -34,6 +34,7 @@ class VeyraWebViewController(
 
         // Recycle existing webview if already allocated
         val targetWebView = webView ?: WebView(context).also { wv ->
+            wv.id = dev.veyra.tv.browser.R.id.activeWebView
             wv.layoutParams = FrameLayout.LayoutParams(
                 ViewGroup.LayoutParams.MATCH_PARENT,
                 ViewGroup.LayoutParams.MATCH_PARENT

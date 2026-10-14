@@ -57,5 +57,7 @@ class SecurityPolicyTest {
         // HTML5 video ad skipper
         assertTrue(script.contains("ytp-ad-skip-button"))
         assertTrue(script.contains("ad-showing"))
+        // Idempotency guard preventing duplicate timers and event listeners
+        assertTrue(script.contains("__veyra_desktop_injected"))
     }
 }

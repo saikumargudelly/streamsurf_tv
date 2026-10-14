@@ -43,6 +43,13 @@ class VeyraApplication : Application() {
             Log.e(TAG, "Error initializing ContentBlocker: ${t.message}", t)
         }
 
+        // 4. Initialize NextDNS DoH loopback proxy if enabled by user
+        try {
+            dev.veyra.tv.browser.net.NextDnsController.initialize(this)
+        } catch (t: Throwable) {
+            Log.e(TAG, "Error initializing NextDnsController: ${t.message}", t)
+        }
+
         // 4. Safe web contents debugging toggle
         try {
             val isDebuggable = (applicationInfo.flags and android.content.pm.ApplicationInfo.FLAG_DEBUGGABLE) != 0

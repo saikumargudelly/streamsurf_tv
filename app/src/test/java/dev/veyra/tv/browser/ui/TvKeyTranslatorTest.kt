@@ -55,8 +55,11 @@ class TvKeyTranslatorTest {
     @Test
     fun testTranslatePassThroughUnchanged() {
         assertEquals(KeyEvent.KEYCODE_DPAD_UP, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_DPAD_UP))
-        assertEquals(KeyEvent.KEYCODE_ENTER, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_ENTER))
         assertEquals(KeyEvent.KEYCODE_DPAD_DOWN, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_DPAD_DOWN))
+        assertEquals(KeyEvent.KEYCODE_DPAD_LEFT, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_DPAD_LEFT))
+        assertEquals(KeyEvent.KEYCODE_DPAD_RIGHT, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_DPAD_RIGHT))
+        assertEquals(KeyEvent.KEYCODE_MENU, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_MENU))
+        assertEquals(KeyEvent.KEYCODE_ENTER, TvKeyTranslator.translateKeyCode(KeyEvent.KEYCODE_ENTER))
     }
 }
 

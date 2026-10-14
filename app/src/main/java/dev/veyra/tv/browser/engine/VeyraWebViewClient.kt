@@ -168,7 +168,6 @@ class VeyraWebViewClient(
 
     override fun onPageCommitVisible(view: WebView?, url: String?) {
         super.onPageCommitVisible(view, url)
-        injectDesktopEnvironment(view, url)
         ContentBlocker.applyCosmeticRules(view, url)
     }
 

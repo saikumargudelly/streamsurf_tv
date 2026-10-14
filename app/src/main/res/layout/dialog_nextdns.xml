@@ -1,0 +1,239 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/bg_surface"
+    android:padding="24dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <!-- Dialog Header -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:gravity="center_vertical"
+            android:orientation="horizontal">
+
+            <ImageView
+                android:layout_width="28dp"
+                android:layout_height="28dp"
+                android:layout_marginEnd="12dp"
+                android:src="@drawable/ic_nav_dns"
+                tools:ignore="ContentDescription" />
+
+            <LinearLayout
+                android:layout_width="0dp"
+                android:layout_height="wrap_content"
+                android:layout_weight="1"
+                android:orientation="vertical">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="NextDNS Configuration"
+                    android:textColor="@color/text_primary"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginTop="2dp"
+                    android:text="Enter your custom NextDNS profile ID to block ads and encrypt DNS queries"
+                    android:textColor="@color/text_secondary"
+                    android:textSize="12sp" />
+            </LinearLayout>
+        </LinearLayout>
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1dp"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="16dp"
+            android:background="@color/divider" />
+
+        <!-- Enable NextDNS Checkbox / Toggle -->
+        <CheckBox
+            android:id="@+id/chkEnableNextDns"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@drawable/bg_tile_selector"
+            android:buttonTint="@color/accent_primary"
+            android:focusable="true"
+            android:padding="12dp"
+            android:text="Enable NextDNS in Veyra TV"
+            android:textColor="@color/text_primary"
+            android:textSize="14sp"
+            android:textStyle="bold"
+            android:nextFocusDown="@+id/editNextDnsInput" />
+
+        <!-- NextDNS ID Input Section -->
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="16dp"
+            android:layout_marginBottom="6dp"
+            android:text="NextDNS Profile ID or Custom DoH URL:"
+            android:textColor="@color/text_primary"
+            android:textSize="13sp"
+            android:textStyle="bold" />
+
+        <EditText
+            android:id="@+id/editNextDnsInput"
+            android:layout_width="match_parent"
+            android:layout_height="44dp"
+            android:background="@drawable/bg_input_selector"
+            android:focusable="true"
+            android:hint="e.g. 28a9b1 or https://dns.nextdns.io/28a9b1"
+            android:imeOptions="actionDone"
+            android:inputType="textUri"
+            android:maxLines="1"
+            android:paddingStart="14dp"
+            android:paddingEnd="14dp"
+            android:singleLine="true"
+            android:textColor="@color/text_primary"
+            android:textColorHint="@color/text_muted"
+            android:textSize="14sp"
+            android:nextFocusUp="@+id/chkEnableNextDns"
+            android:nextFocusDown="@+id/btnOpenSystemSettings" />
+
+        <!-- Live DoH preview -->
+        <TextView
+            android:id="@+id/tvDoHPreview"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:textColor="@color/text_muted"
+            android:textSize="11sp"
+            tools:text="DoH Endpoint: https://dns.nextdns.io/28a9b1/Veyra_TV/dns-query" />
+
+        <!-- System Private DNS Info Card -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp"
+            android:background="@drawable/bg_header_card"
+            android:orientation="vertical"
+            android:padding="12dp">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Android TV System Private DNS (Optional)"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvDotPreview"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="4dp"
+                android:textColor="@color/accent_secondary"
+                android:textSize="11sp"
+                tools:text="Hostname: 28a9b1.dns.nextdns.io" />
+
+            <Button
+                android:id="@+id/btnOpenSystemSettings"
+                android:layout_width="wrap_content"
+                android:layout_height="36dp"
+                android:layout_marginTop="8dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:focusable="true"
+                android:paddingStart="14dp"
+                android:paddingEnd="14dp"
+                android:text="Open TV Network Settings"
+                android:textColor="@color/text_primary"
+                android:textSize="11sp"
+                android:nextFocusUp="@+id/editNextDnsInput"
+                android:nextFocusDown="@+id/btnSaveNextDns" />
+        </LinearLayout>
+
+        <!-- Test Connection Status Text -->
+        <TextView
+            android:id="@+id/tvTestStatus"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="12dp"
+            android:textColor="@color/accent_primary"
+            android:textSize="12sp"
+            android:visibility="gone"
+            tools:text="Connected to NextDNS (24ms)"
+            tools:visibility="visible" />
+
+        <!-- Action Buttons -->
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:gravity="end"
+            android:orientation="horizontal">
+
+            <Button
+                android:id="@+id/btnTestNextDns"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Test"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:nextFocusUp="@+id/btnOpenSystemSettings"
+                android:nextFocusRight="@+id/btnSaveNextDns" />
+
+            <Button
+                android:id="@+id/btnSaveNextDns"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_surf_button_selector"
+                android:focusable="true"
+                android:paddingStart="18dp"
+                android:paddingEnd="18dp"
+                android:text="Save &amp; Activate"
+                android:textColor="@color/bg_surface"
+                android:textSize="12sp"
+                android:textStyle="bold"
+                android:nextFocusUp="@+id/btnOpenSystemSettings"
+                android:nextFocusLeft="@+id/btnTestNextDns"
+                android:nextFocusRight="@+id/btnDisableNextDns" />
+
+            <Button
+                android:id="@+id/btnDisableNextDns"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:layout_marginEnd="10dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Disable"
+                android:textColor="@color/text_muted"
+                android:textSize="12sp"
+                android:nextFocusUp="@+id/btnOpenSystemSettings"
+                android:nextFocusLeft="@+id/btnSaveNextDns"
+                android:nextFocusRight="@+id/btnCloseNextDns" />
+
+            <Button
+                android:id="@+id/btnCloseNextDns"
+                android:layout_width="wrap_content"
+                android:layout_height="40dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:focusable="true"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:text="Close"
+                android:textColor="@color/text_primary"
+                android:textSize="12sp"
+                android:nextFocusUp="@+id/btnOpenSystemSettings"
+                android:nextFocusLeft="@+id/btnDisableNextDns" />
+        </LinearLayout>
+    </LinearLayout>
+</ScrollView>

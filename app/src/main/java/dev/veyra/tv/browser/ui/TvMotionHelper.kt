@@ -18,8 +18,8 @@ import androidx.core.view.ViewCompat
  */
 object TvMotionHelper {
 
-    private val TV_INTERPOLATOR: TimeInterpolator = DecelerateInterpolator(1.8f)
-    private const val ANIM_DURATION_MS: Long = 160L
+    private val TV_INTERPOLATOR: TimeInterpolator = DecelerateInterpolator(1.6f)
+    private const val ANIM_DURATION_MS: Long = 140L
 
     /**
      * Attaches production TV focus motion to a card or actionable UI element.
@@ -28,8 +28,8 @@ object TvMotionHelper {
      */
     fun attachTvFocusAnimation(
         view: View,
-        scaleFactor: Float = 1.08f,
-        elevationDp: Float = 8f,
+        scaleFactor: Float = 1.05f,
+        elevationDp: Float = 6f,
         parentHorizontalScroll: HorizontalScrollView? = null,
         parentVerticalScroll: ScrollView? = null
     ) {
@@ -124,16 +124,16 @@ object TvMotionHelper {
             if (hasFocus) {
                 v.z = 10f
                 v.animate()
-                    .scaleX(1.15f)
-                    .scaleY(1.15f)
-                    .setDuration(120L)
+                    .scaleX(1.06f)
+                    .scaleY(1.06f)
+                    .setDuration(110L)
                     .setInterpolator(TV_INTERPOLATOR)
                     .start()
             } else {
                 v.animate()
                     .scaleX(1.0f)
                     .scaleY(1.0f)
-                    .setDuration(120L)
+                    .setDuration(110L)
                     .setInterpolator(TV_INTERPOLATOR)
                     .withEndAction { v.z = 0f }
                     .start()

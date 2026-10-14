@@ -30,6 +30,9 @@ object SecurityPolicy {
     const val DESKTOP_INJECTION_SCRIPT = """
         (function() {
             try {
+                if (window.__veyra_desktop_injected) return;
+                window.__veyra_desktop_injected = true;
+
                 // 1. Touch points and desktop platform spoofing
                 Object.defineProperty(navigator, 'maxTouchPoints', { get: () => 0, configurable: true });
                 Object.defineProperty(navigator, 'platform', { get: () => 'Win32', configurable: true });

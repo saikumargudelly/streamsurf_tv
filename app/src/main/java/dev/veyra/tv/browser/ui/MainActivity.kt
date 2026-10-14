@@ -13,12 +13,18 @@ import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
 import android.view.inputmethod.EditorInfo
+import android.provider.Settings
+import android.widget.Button
+import android.widget.CheckBox
+import android.widget.EditText
 import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import dev.veyra.tv.browser.R
+import dev.veyra.tv.browser.net.NextDnsConfig
+import dev.veyra.tv.browser.net.NextDnsController
 import dev.veyra.tv.browser.databinding.ActivityMainBinding
 import dev.veyra.tv.browser.engine.VeyraWebChromeClient
 import dev.veyra.tv.browser.engine.VeyraWebViewController
@@ -100,9 +106,14 @@ class MainActivity : AppCompatActivity() {
             onProgressChangedCallback = { progress ->
                 if (progress in 1..99) {
                     binding.pageProgressBar.visibility = View.VISIBLE
-                    binding.pageProgressBar.progress = progress
+                    binding.pageProgressBar.alpha = 1f
+                    binding.pageProgressBar.setProgress(progress, true)
                 } else {
-                    binding.pageProgressBar.visibility = View.GONE
+                    binding.pageProgressBar.animate()
+                        .alpha(0f)
+                        .setDuration(250)
+                        .withEndAction { binding.pageProgressBar.visibility = View.GONE }
+                        .start()
                 }
             },
             onTitleReceivedCallback = { title ->
@@ -112,7 +123,7 @@ class MainActivity : AppCompatActivity() {
             },
             onFullscreenStateChanged = { isFullscreen ->
                 if (!isFullscreen) {
-                    binding.webViewContainer.requestFocus()
+                    controller.webView?.requestFocus()
                 }
             }
         )
@@ -200,6 +211,11 @@ class MainActivity : AppCompatActivity() {
             updateShieldStatusUI(enabled)
             val msg = if (enabled) "Ad & Tracker Shield: ACTIVE (Blocking ads, popups & trackers)" else "Ad & Tracker Shield: PAUSED"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+
+        // Home NextDNS Pill Action: Open manual NextDNS configuration dialog
+        binding.btnHomeNextDns.setOnClickListener {
+            showNextDnsDialog()
         }
 
         // Home Bookmarks Pill Action: Jump to saved bookmarks row or open bookmarks dialog
@@ -295,12 +311,14 @@ class MainActivity : AppCompatActivity() {
 
         // Attach focus motion to Header Action Pills & Omnibar buttons
         TvMotionHelper.attachTvFocusAnimation(binding.btnHomeShield, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeNextDns, scaleFactor = 1.05f)
         TvMotionHelper.attachTvFocusAnimation(binding.btnHomeBookmarks, scaleFactor = 1.05f)
         TvMotionHelper.attachTvFocusAnimation(binding.btnHomeQrLogin, scaleFactor = 1.05f)
         TvMotionHelper.attachTvFocusAnimation(binding.btnGo, scaleFactor = 1.05f)
-        TvMotionHelper.attachTvFocusAnimation(binding.btnClearSearch, scaleFactor = 1.15f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnClearSearch, scaleFactor = 1.08f)
         TvMotionHelper.attachTvFocusAnimation(binding.searchBarLayout, scaleFactor = 1.02f)
         updateShieldStatusUI(ContentBlocker.isEnabled)
+        updateNextDnsStatusUI()
         refreshBookmarksShelf()
         binding.inputUrlOrSearch.post {
             binding.inputUrlOrSearch.requestFocus()
@@ -381,6 +399,11 @@ class MainActivity : AppCompatActivity() {
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
 
+        // NextDNS Configuration Action
+        binding.btnNavNextDns.setOnClickListener {
+            showNextDnsDialog()
+        }
+
         // Easy Phone QR & TV Code Sign-in Action
         binding.btnNavQrLogin.setOnClickListener {
             handleQrLoginAction()
@@ -412,6 +435,7 @@ class MainActivity : AppCompatActivity() {
             binding.tvNavZoomLevel,
             binding.btnNavZoomIn,
             binding.btnNavShield,
+            binding.btnNavNextDns,
             binding.btnNavQrLogin,
             binding.btnNavBookmark,
             binding.tvCurrentUrl
@@ -575,15 +599,6 @@ class MainActivity : AppCompatActivity() {
 
         if (event.action == KeyEvent.ACTION_DOWN) {
             when (event.keyCode) {
-                KeyEvent.KEYCODE_DPAD_UP -> {
-                    if (binding.browserContainer.visibility == View.VISIBLE &&
-                        !binding.navToolbar.hasFocus() &&
-                        (controller.webView?.scrollY ?: 0) <= 10
-                    ) {
-                        binding.btnNavHome.requestFocus()
-                        return true
-                    }
-                }
                 KeyEvent.KEYCODE_DPAD_DOWN -> {
                     if (binding.browserContainer.visibility == View.VISIBLE && binding.navToolbar.hasFocus()) {
                         controller.webView?.requestFocus()
@@ -784,6 +799,148 @@ class MainActivity : AppCompatActivity() {
             binding.tvHomeShieldStatus.text = getString(R.string.home_shield_off)
             binding.imgHomeShieldDot.setImageResource(R.drawable.ic_status_dot_red)
             binding.imgHomeShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
+        }
+    }
+
+    private fun updateNextDnsStatusUI() {
+        val enabled = BrowserPreferences.isNextDnsEnabled(this)
+        val input = BrowserPreferences.getNextDnsInput(this)
+        val profileId = NextDnsConfig.extractProfileId(input)
+
+        binding.btnNavNextDns.isSelected = enabled
+        binding.btnHomeNextDns.isSelected = enabled
+
+        if (enabled && profileId.isNotEmpty()) {
+            binding.tvHomeNextDnsStatus.text = "NextDNS ($profileId)"
+            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_green)
+            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+        } else if (enabled) {
+            binding.tvHomeNextDnsStatus.text = "NextDNS (On)"
+            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_green)
+            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+        } else {
+            binding.tvHomeNextDnsStatus.text = "NextDNS (Off)"
+            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_red)
+            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
+            binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.text_primary)
+        }
+    }
+
+    private fun showNextDnsDialog() {
+        val dialogView = layoutInflater.inflate(R.layout.dialog_nextdns, null)
+        val chkEnable = dialogView.findViewById<CheckBox>(R.id.chkEnableNextDns)
+        val editInput = dialogView.findViewById<EditText>(R.id.editNextDnsInput)
+        val tvDoHPreview = dialogView.findViewById<TextView>(R.id.tvDoHPreview)
+        val tvDotPreview = dialogView.findViewById<TextView>(R.id.tvDotPreview)
+        val btnOpenSettings = dialogView.findViewById<Button>(R.id.btnOpenSystemSettings)
+        val tvTestStatus = dialogView.findViewById<TextView>(R.id.tvTestStatus)
+        val btnTest = dialogView.findViewById<Button>(R.id.btnTestNextDns)
+        val btnDisable = dialogView.findViewById<Button>(R.id.btnDisableNextDns)
+        val btnSave = dialogView.findViewById<Button>(R.id.btnSaveNextDns)
+        val btnClose = dialogView.findViewById<Button>(R.id.btnCloseNextDns)
+
+        val currentEnabled = BrowserPreferences.isNextDnsEnabled(this)
+        val currentInput = BrowserPreferences.getNextDnsInput(this)
+
+        chkEnable.isChecked = currentEnabled
+        editInput.setText(currentInput)
+
+        fun updatePreviews(text: String) {
+            tvDoHPreview.text = "DoH Endpoint: ${NextDnsConfig.buildDoHUrl(text)}"
+            tvDotPreview.text = "Android TV Hostname: ${NextDnsConfig.buildDotHostname(text)}"
+        }
+        updatePreviews(currentInput)
+
+        editInput.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                updatePreviews(s?.toString() ?: "")
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        btnOpenSettings.setOnClickListener {
+            try {
+                startActivity(Intent(Settings.ACTION_NETWORK_OPERATOR_SETTINGS))
+            } catch (_: Throwable) {
+                try {
+                    startActivity(Intent(Settings.ACTION_WIRELESS_SETTINGS))
+                } catch (_: Throwable) {
+                    try {
+                        startActivity(Intent(Settings.ACTION_SETTINGS))
+                    } catch (_: Throwable) {
+                        Toast.makeText(this, "Could not open TV Network Settings directly", Toast.LENGTH_SHORT).show()
+                    }
+                }
+            }
+        }
+
+        val dialog = AlertDialog.Builder(this)
+            .setView(dialogView)
+            .create()
+
+        btnTest.setOnClickListener {
+            val input = editInput.text.toString().trim()
+            tvTestStatus.visibility = View.VISIBLE
+            tvTestStatus.text = "Testing NextDNS resolution..."
+            tvTestStatus.setTextColor(ContextCompat.getColor(this, R.color.text_muted))
+
+            val dohUrl = NextDnsConfig.buildDoHUrl(input)
+            Thread {
+                val resolver = dev.veyra.tv.browser.net.NextDnsResolver(dohUrl)
+                val result = resolver.testConnection()
+                runOnUiThread {
+                    if (result.success) {
+                        tvTestStatus.text = "✓ ${result.message}"
+                        tvTestStatus.setTextColor(ContextCompat.getColor(this, R.color.accent_green))
+                    } else {
+                        tvTestStatus.text = "✗ ${result.message}"
+                        tvTestStatus.setTextColor(ContextCompat.getColor(this, R.color.danger))
+                    }
+                }
+            }.start()
+        }
+
+        btnDisable.setOnClickListener {
+            BrowserPreferences.setNextDnsEnabled(this, false)
+            NextDnsController.stop(this)
+            updateNextDnsStatusUI()
+            Toast.makeText(this, "NextDNS Disabled", Toast.LENGTH_SHORT).show()
+            dialog.dismiss()
+        }
+
+        btnSave.setOnClickListener {
+            val input = editInput.text.toString().trim()
+            val enable = chkEnable.isChecked || input.isNotEmpty()
+
+            BrowserPreferences.setNextDnsInput(this, input)
+            BrowserPreferences.setNextDnsEnabled(this, enable)
+
+            if (enable) {
+                val started = NextDnsController.start(this)
+                val profileId = NextDnsConfig.extractProfileId(input)
+                if (started) {
+                    Toast.makeText(this, "NextDNS Activated (Profile: $profileId)", Toast.LENGTH_LONG).show()
+                } else {
+                    Toast.makeText(this, "Saved, but proxy override failed on this device", Toast.LENGTH_SHORT).show()
+                }
+            } else {
+                NextDnsController.stop(this)
+                Toast.makeText(this, "NextDNS Deactivated", Toast.LENGTH_SHORT).show()
+            }
+            updateNextDnsStatusUI()
+            dialog.dismiss()
+        }
+
+        btnClose.setOnClickListener {
+            dialog.dismiss()
+        }
+
+        dialog.show()
+        editInput.post {
+            editInput.requestFocus()
         }
     }
 

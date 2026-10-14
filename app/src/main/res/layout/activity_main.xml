@@ -79,24 +79,24 @@
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:text="STREAMSURF"
+                                    android:text="VEYRA"
                                     android:textColor="@color/text_primary"
                                     android:textSize="26sp"
                                     android:textStyle="bold"
-                                    android:letterSpacing="0.06"
+                                    android:letterSpacing="0.08"
                                     android:fontFamily="sans-serif-black" />
 
                                 <TextView
                                     android:layout_width="wrap_content"
                                     android:layout_height="wrap_content"
-                                    android:layout_marginStart="10dp"
+                                    android:layout_marginStart="8dp"
                                     android:background="@drawable/bg_tv_badge"
                                     android:paddingStart="7dp"
                                     android:paddingTop="2dp"
                                     android:paddingEnd="7dp"
                                     android:paddingBottom="2dp"
                                     android:text="TV"
-                                    android:textColor="@color/accent_primary"
+                                    android:textColor="@color/text_secondary"
                                     android:textSize="11sp"
                                     android:textStyle="bold"
                                     android:letterSpacing="0.08" />
@@ -141,7 +141,7 @@
                             android:paddingStart="12dp"
                             android:paddingEnd="14dp"
                             android:nextFocusDown="@+id/inputUrlOrSearch"
-                            android:nextFocusRight="@+id/btnHomeBookmarks">
+                            android:nextFocusRight="@+id/btnHomeNextDns">
 
                             <ImageView
                                 android:id="@+id/imgHomeShieldDot"
@@ -169,6 +169,48 @@
                                 android:textStyle="bold" />
                         </LinearLayout>
 
+                        <!-- NextDNS Quick Pill -->
+                        <LinearLayout
+                            android:id="@+id/btnHomeNextDns"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:layout_marginEnd="10dp"
+                            android:background="@drawable/bg_header_pill_selector"
+                            android:focusable="true"
+                            android:gravity="center_vertical"
+                            android:orientation="horizontal"
+                            android:paddingStart="12dp"
+                            android:paddingEnd="14dp"
+                            android:nextFocusLeft="@+id/btnHomeShield"
+                            android:nextFocusRight="@+id/btnHomeBookmarks"
+                            android:nextFocusDown="@+id/inputUrlOrSearch">
+
+                            <ImageView
+                                android:id="@+id/imgHomeNextDnsDot"
+                                android:layout_width="8dp"
+                                android:layout_height="8dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/ic_status_dot_red"
+                                tools:ignore="ContentDescription" />
+
+                            <ImageView
+                                android:id="@+id/imgHomeNextDnsIcon"
+                                android:layout_width="16dp"
+                                android:layout_height="16dp"
+                                android:layout_marginEnd="6dp"
+                                android:src="@drawable/ic_nav_dns"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
+                                android:id="@+id/tvHomeNextDnsStatus"
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="NextDNS"
+                                android:textColor="@color/text_primary"
+                                android:textSize="12sp"
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
                         <!-- Bookmarks Quick Pill -->
                         <LinearLayout
                             android:id="@+id/btnHomeBookmarks"
@@ -181,7 +223,7 @@
                             android:orientation="horizontal"
                             android:paddingStart="12dp"
                             android:paddingEnd="14dp"
-                            android:nextFocusLeft="@+id/btnHomeShield"
+                            android:nextFocusLeft="@+id/btnHomeNextDns"
                             android:nextFocusRight="@+id/btnHomeQrLogin"
                             android:nextFocusDown="@+id/inputUrlOrSearch">
 
@@ -368,17 +410,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="MY BOOKMARKS"
-                    android:textColor="@color/star_gold"
-                    android:textSize="13sp"
+                    android:text="Bookmarks"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.08" />
+                    android:letterSpacing="0.04" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="• Quick access to saved sites • Click star on any page"
+                    android:layout_marginStart="10dp"
+                    android:text="• Saved web pages"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -414,17 +456,17 @@
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="EASY TV SIGN-IN (SCAN QR / PHONE CODE)"
-                    android:textColor="@color/accent_primary"
-                    android:textSize="13sp"
+                    android:text="Quick TV Sign-In"
+                    android:textColor="@color/text_primary"
+                    android:textSize="14sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.08" />
+                    android:letterSpacing="0.04" />
 
                 <TextView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_marginStart="12dp"
-                    android:text="• No typing required on TV remote"
+                    android:layout_marginStart="10dp"
+                    android:text="• Scan QR or phone code"
                     android:textColor="@color/text_secondary"
                     android:textSize="12sp" />
             </LinearLayout>
@@ -652,11 +694,11 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginTop="22dp"
-                android:text="DESKTOP WEB BROWSING (FULL DESKTOP SITES)"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
+                android:text="Streaming &amp; Web Apps"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.08" />
+                android:letterSpacing="0.04" />
 
             <HorizontalScrollView
                 android:id="@+id/scrollShelf1"
@@ -960,12 +1002,12 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
-                android:text="ANIME, MUSIC &amp; MEDIA APPS"
-                android:textColor="@color/text_secondary"
-                android:textSize="13sp"
+                android:layout_marginTop="20dp"
+                android:text="Media &amp; Search"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
                 android:textStyle="bold"
-                android:letterSpacing="0.08" />
+                android:letterSpacing="0.04" />
 
             <HorizontalScrollView
                 android:id="@+id/scrollShelf2"
@@ -1301,7 +1343,7 @@
                 android:contentDescription="@string/nav_back"
                 android:focusable="true"
                 android:nextFocusRight="@+id/btnNavForward"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_back" />
 
             <ImageButton
@@ -1315,7 +1357,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavBack"
                 android:nextFocusRight="@+id/btnNavReload"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_forward" />
 
             <ImageButton
@@ -1329,7 +1371,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavForward"
                 android:nextFocusRight="@+id/btnNavHome"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_reload" />
 
             <ImageButton
@@ -1343,7 +1385,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavReload"
                 android:nextFocusRight="@+id/btnNavPointer"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_home" />
 
             <ImageButton
@@ -1357,7 +1399,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavHome"
                 android:nextFocusRight="@+id/btnNavDesktop"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_cursor" />
 
             <ImageButton
@@ -1371,7 +1413,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavPointer"
                 android:nextFocusRight="@+id/btnNavZoomOut"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_desktop" />
 
             <!-- Zoom Out Button (Magnifier -) -->
@@ -1386,7 +1428,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavDesktop"
                 android:nextFocusRight="@+id/tvNavZoomLevel"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_zoom_out" />
 
             <!-- Zoom Level Badge (Click to reset zoom) -->
@@ -1401,7 +1443,7 @@
                 android:gravity="center"
                 android:nextFocusLeft="@+id/btnNavZoomOut"
                 android:nextFocusRight="@+id/btnNavZoomIn"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:textColor="@color/accent_primary"
                 android:textSize="12sp"
                 android:textStyle="bold"
@@ -1419,7 +1461,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/tvNavZoomLevel"
                 android:nextFocusRight="@+id/btnNavShield"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_zoom_in" />
 
             <!-- In-App Ad Blocker Toggle Shield -->
@@ -1433,9 +1475,24 @@
                 android:contentDescription="Toggle In-App Ad Blocker"
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavZoomIn"
-                android:nextFocusRight="@+id/btnNavQrLogin"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusRight="@+id/btnNavNextDns"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_shield" />
+
+            <!-- NextDNS Manual Configuration Button -->
+            <ImageButton
+                android:id="@+id/btnNavNextDns"
+                android:layout_width="40dp"
+                android:layout_height="match_parent"
+                android:padding="8dp"
+                android:layout_marginStart="6dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:contentDescription="Configure Custom NextDNS"
+                android:focusable="true"
+                android:nextFocusLeft="@+id/btnNavShield"
+                android:nextFocusRight="@+id/btnNavQrLogin"
+                android:nextFocusDown="@+id/activeWebView"
+                android:src="@drawable/ic_nav_dns" />
 
             <!-- New TV QR Code / Easy Phone Login Shortcut -->
             <ImageButton
@@ -1447,9 +1504,9 @@
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="TV QR and Code Easy Sign-In"
                 android:focusable="true"
-                android:nextFocusLeft="@+id/btnNavShield"
+                android:nextFocusLeft="@+id/btnNavNextDns"
                 android:nextFocusRight="@+id/btnNavBookmark"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_qr" />
 
             <!-- Add to Bookmarks Button -->
@@ -1464,7 +1521,7 @@
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavQrLogin"
                 android:nextFocusRight="@+id/tvCurrentUrl"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_bookmark" />
 
             <!-- Current URL indicator / editable on click -->
@@ -1479,7 +1536,7 @@
                 android:focusable="true"
                 android:gravity="center_vertical"
                 android:nextFocusLeft="@+id/btnNavBookmark"
-                android:nextFocusDown="@+id/webViewContainer"
+                android:nextFocusDown="@+id/activeWebView"
                 android:paddingStart="16dp"
                 android:paddingEnd="16dp"
                 android:singleLine="true"
@@ -1504,8 +1561,9 @@
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_weight="1"
-            android:focusable="true"
-            android:focusableInTouchMode="true"
+            android:focusable="false"
+            android:focusableInTouchMode="false"
+            android:descendantFocusability="afterDescendants"
             android:background="@color/bg_dark" />
     </LinearLayout>
 
