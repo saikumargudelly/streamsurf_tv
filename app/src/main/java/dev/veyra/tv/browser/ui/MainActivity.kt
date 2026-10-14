@@ -2,10 +2,13 @@ package dev.veyra.tv.browser.ui
 
 import android.content.ComponentCallbacks2
 import android.content.Intent
+import android.content.res.ColorStateList
 import android.graphics.PixelFormat
 import android.net.Uri
 import android.net.http.SslError
 import android.os.Bundle
+import android.text.Editable
+import android.text.TextWatcher
 import android.view.KeyEvent
 import android.view.View
 import android.view.WindowManager
@@ -14,6 +17,7 @@ import android.widget.TextView
 import android.widget.Toast
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import dev.veyra.tv.browser.R
 import dev.veyra.tv.browser.databinding.ActivityMainBinding
 import dev.veyra.tv.browser.engine.VeyraWebChromeClient
@@ -138,7 +142,7 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun setupHomeActions() {
-        // Go button
+        // Go / Surf button
         binding.btnGo.setOnClickListener {
             val query = binding.inputUrlOrSearch.text.toString()
             if (query.isNotBlank()) {
@@ -163,6 +167,55 @@ class MainActivity : AppCompatActivity() {
             } else {
                 false
             }
+        }
+
+        // Search text watcher to toggle Clear button visibility & D-pad navigation
+        binding.inputUrlOrSearch.addTextChangedListener(object : TextWatcher {
+            override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
+            override fun onTextChanged(s: CharSequence?, start: Int, before: Int, count: Int) {
+                val hasText = !s.isNullOrEmpty()
+                binding.btnClearSearch.visibility = if (hasText) View.VISIBLE else View.GONE
+                binding.inputUrlOrSearch.nextFocusRightId = if (hasText) R.id.btnClearSearch else R.id.btnGo
+                binding.btnGo.nextFocusLeftId = if (hasText) R.id.btnClearSearch else R.id.inputUrlOrSearch
+            }
+            override fun afterTextChanged(s: Editable?) {}
+        })
+
+        // Search capsule focus glow
+        binding.inputUrlOrSearch.setOnFocusChangeListener { _, hasFocus ->
+            binding.searchBarLayout.isActivated = hasFocus
+        }
+
+        // Clear Search text action
+        binding.btnClearSearch.setOnClickListener {
+            binding.inputUrlOrSearch.text?.clear()
+            binding.inputUrlOrSearch.requestFocus()
+        }
+
+        // Home Shield Pill Action: Quick toggle ad & tracker blocker
+        binding.btnHomeShield.setOnClickListener {
+            val enabled = !ContentBlocker.isEnabled
+            ContentBlocker.isEnabled = enabled
+            BrowserPreferences.setContentBlockerEnabled(this, enabled)
+            updateShieldStatusUI(enabled)
+            val msg = if (enabled) "Ad & Tracker Shield: ACTIVE (Blocking ads, popups & trackers)" else "Ad & Tracker Shield: PAUSED"
+            Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+        }
+
+        // Home Bookmarks Pill Action: Jump to saved bookmarks row or open bookmarks dialog
+        binding.btnHomeBookmarks.setOnClickListener {
+            val bookmarks = BrowserPreferences.getBookmarks(this)
+            if (bookmarks.isNotEmpty() && binding.containerBookmarks.childCount > 0) {
+                binding.homeContainer.smoothScrollTo(0, binding.sectionBookmarksHeader.top - 20)
+                binding.containerBookmarks.getChildAt(0)?.requestFocus()
+            } else {
+                showBookmarksDialog()
+            }
+        }
+
+        // Home Phone Sign-In Pill Action: TV QR & Activation Codes
+        binding.btnHomeQrLogin.setOnClickListener {
+            handleQrLoginAction()
         }
 
         // Section 1: Easy TV Sign-In (Scan QR / Phone Activation Code)
@@ -240,9 +293,18 @@ class MainActivity : AppCompatActivity() {
             )
         }
 
+        // Attach focus motion to Header Action Pills & Omnibar buttons
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeShield, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeBookmarks, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeQrLogin, scaleFactor = 1.05f)
         TvMotionHelper.attachTvFocusAnimation(binding.btnGo, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnClearSearch, scaleFactor = 1.15f)
         TvMotionHelper.attachTvFocusAnimation(binding.searchBarLayout, scaleFactor = 1.02f)
+        updateShieldStatusUI(ContentBlocker.isEnabled)
         refreshBookmarksShelf()
+        binding.inputUrlOrSearch.post {
+            binding.inputUrlOrSearch.requestFocus()
+        }
     }
 
     private fun setupToolbarActions() {
@@ -310,13 +372,12 @@ class MainActivity : AppCompatActivity() {
         }
 
         // In-App Ad & Tracker Blocker Shield Toggle
-        binding.btnNavShield.isSelected = ContentBlocker.isEnabled
         binding.btnNavShield.setOnClickListener {
             val enabled = !ContentBlocker.isEnabled
             ContentBlocker.isEnabled = enabled
-            dev.veyra.tv.browser.storage.BrowserPreferences.setContentBlockerEnabled(this, enabled)
-            binding.btnNavShield.isSelected = enabled
-            val msg = if (enabled) "Ad & Tracker Blocker: ON" else "Ad & Tracker Blocker: OFF"
+            BrowserPreferences.setContentBlockerEnabled(this, enabled)
+            updateShieldStatusUI(enabled)
+            val msg = if (enabled) "Ad & Tracker Shield: ACTIVE" else "Ad & Tracker Shield: PAUSED"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
 
@@ -429,6 +490,7 @@ class MainActivity : AppCompatActivity() {
         binding.fullscreenContainer.visibility = View.GONE
         binding.homeContainer.visibility = View.VISIBLE
         controller.onPause()
+        updateShieldStatusUI(ContentBlocker.isEnabled)
         refreshBookmarksShelf()
         binding.inputUrlOrSearch.requestFocus()
     }
@@ -668,17 +730,21 @@ class MainActivity : AppCompatActivity() {
     private fun refreshBookmarksShelf() {
         val bookmarks = BrowserPreferences.getBookmarks(this)
         if (bookmarks.isEmpty()) {
+            binding.tvHomeBookmarksCount.text = getString(R.string.home_bookmarks)
             binding.sectionBookmarksHeader.visibility = View.GONE
             binding.scrollShelfBookmarks.visibility = View.GONE
             binding.containerBookmarks.removeAllViews()
+            binding.inputUrlOrSearch.nextFocusDownId = R.id.tileTvYoutube
+            binding.btnGo.nextFocusDownId = R.id.tileTvYoutube
             return
         }
 
+        binding.tvHomeBookmarksCount.text = "${getString(R.string.home_bookmarks)} (${bookmarks.size})"
         binding.sectionBookmarksHeader.visibility = View.VISIBLE
         binding.scrollShelfBookmarks.visibility = View.VISIBLE
         binding.containerBookmarks.removeAllViews()
 
-        for (bm in bookmarks) {
+        for ((index, bm) in bookmarks.withIndex()) {
             val itemView = layoutInflater.inflate(R.layout.item_bookmark_tile, binding.containerBookmarks, false)
             val tvHost = itemView.findViewById<TextView>(R.id.tvBookmarkHost)
             val tvTitle = itemView.findViewById<TextView>(R.id.tvBookmarkTitle)
@@ -696,8 +762,28 @@ class MainActivity : AppCompatActivity() {
                 true
             }
 
+            itemView.id = View.generateViewId()
+            if (index == 0) {
+                binding.inputUrlOrSearch.nextFocusDownId = itemView.id
+                binding.btnGo.nextFocusDownId = itemView.id
+            }
+
             TvMotionHelper.attachTvFocusAnimation(itemView, scaleFactor = 1.05f)
             binding.containerBookmarks.addView(itemView)
+        }
+    }
+
+    private fun updateShieldStatusUI(enabled: Boolean) {
+        binding.btnNavShield.isSelected = enabled
+        binding.btnHomeShield.isSelected = enabled
+        if (enabled) {
+            binding.tvHomeShieldStatus.text = getString(R.string.home_shield_active)
+            binding.imgHomeShieldDot.setImageResource(R.drawable.ic_status_dot_green)
+            binding.imgHomeShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+        } else {
+            binding.tvHomeShieldStatus.text = getString(R.string.home_shield_off)
+            binding.imgHomeShieldDot.setImageResource(R.drawable.ic_status_dot_red)
+            binding.imgHomeShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
         }
     }
 

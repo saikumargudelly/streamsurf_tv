@@ -2,14 +2,21 @@
     <color name="bg_dark">#0B0E14</color>
     <color name="bg_surface">#161B26</color>
     <color name="bg_surface_elevated">#222B3D</color>
+    <color name="bg_surface_glass">#99161B26</color>
+    <color name="bg_pill">#1A2234</color>
+    <color name="bg_pill_focused">#2A3650</color>
     <color name="accent_primary">#00E5FF</color>
     <color name="accent_secondary">#2979FF</color>
     <color name="accent_glow">#3300E5FF</color>
+    <color name="accent_green">#00E676</color>
+    <color name="accent_green_glow">#2600E676</color>
+    <color name="badge_tv_bg">#2600E5FF</color>
     <color name="focus_ring">#00E5FF</color>
     <color name="star_gold">#FFCA28</color>
     <color name="text_primary">#F0F4FC</color>
     <color name="text_secondary">#94A3B8</color>
     <color name="text_muted">#64748B</color>
     <color name="divider">#1E293B</color>
+    <color name="divider_light">#2A384F</color>
     <color name="danger">#FF4D4D</color>
 </resources>
