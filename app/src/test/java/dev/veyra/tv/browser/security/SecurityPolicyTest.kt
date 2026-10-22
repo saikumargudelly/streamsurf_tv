@@ -44,9 +44,14 @@ class SecurityPolicyTest {
         assertTrue(script.contains("com.widevine.alpha"))
         assertTrue(script.contains("getStatusForPolicy"))
         assertTrue(script.contains("usable"))
-        // Anti-popup and clickjack shield
+        // Anti-popup and clickjack shield: confirms safe suppression without navigating active tab
         assertTrue(script.contains("window.open"))
         assertTrue(script.contains("popads"))
+        assertFalse(script.contains("window.location.href = url"))
+        assertFalse(script.contains("window.location.href ="))
+        // Confirmed removal of overbroad cosmetic selectors
+        assertFalse(script.contains("div[class*=\"pop-\"]"))
+        assertFalse(script.contains("div[id*=\"pop-\"]"))
         // Google IMA dummy surrogate for zero-ad playback
         assertTrue(script.contains("google.ima"))
         assertTrue(script.contains("AdsManager"))
@@ -54,9 +59,10 @@ class SecurityPolicyTest {
         // Hotstar ad cue & intervention pruner
         assertTrue(script.contains("intervention_data"))
         assertTrue(script.contains("ad_breaks"))
-        // HTML5 video ad skipper
+        // HTML5 video ad skipper scoped strictly to YouTube top-level window
         assertTrue(script.contains("ytp-ad-skip-button"))
         assertTrue(script.contains("ad-showing"))
+        assertTrue(script.contains("isYouTube && window === window.top"))
         // Idempotency guard preventing duplicate timers and event listeners
         assertTrue(script.contains("__veyra_desktop_injected"))
     }

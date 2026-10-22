@@ -163,18 +163,19 @@ class VeyraWebViewClient(
 
     override fun onPageFinished(view: WebView?, url: String?) {
         super.onPageFinished(view, url)
-        injectDesktopEnvironment(view, url)
         ContentBlocker.applyCosmeticRules(view, url)
         url?.let { onPageFinishedCallback(it) }
     }
 
     /**
-     * Injects client hints, true desktop viewport scaling, Widevine EME fallback,
-     * and anti-popup shields so OTT websites render smoothly and securely.
+     * Fallback injector for devices where WebViewCompat DOCUMENT_START_SCRIPT
+     * is unsupported, ensuring client hints, Widevine fallback, and popup controls.
      */
     private fun injectDesktopEnvironment(view: WebView?, currentUrl: String?) {
         if (currentUrl?.contains("youtube.com/tv") == true) return
-        view?.evaluateJavascript(SecurityPolicy.DESKTOP_INJECTION_SCRIPT.trimIndent(), null)
+        if (!androidx.webkit.WebViewFeature.isFeatureSupported(androidx.webkit.WebViewFeature.DOCUMENT_START_SCRIPT)) {
+            view?.evaluateJavascript(SecurityPolicy.DESKTOP_INJECTION_SCRIPT.trimIndent(), null)
+        }
     }
 
     /**

@@ -244,9 +244,7 @@
 ##ins.adsbygoogle
 ##div[id*="google_ads"]
 ##div[class*="google_ads"]
-##div[class*="pop-"]
-##div[id*="pop-"]
-##div[class*="popup-"]
-##div[id*="popup-"]
+##div[class*="popup-ad"]
+##div[id*="popup-ad"]
 ##[class*="sponsored-post"]
 ##[class*="native-ad-"]

@@ -271,8 +271,7 @@ object ContentBlocker : AdBlockingEngine {
      * video overlay click traps, and popunder containers.
      */
     const val COSMETIC_BLOCKING_CSS = """
-        div[class*="pop-"], div[id*="pop-"],
-        div[class*="popup-"], div[id*="popup-"],
+        div[class*="popup-ad"], div[id*="popup-ad"],
         div[class*="overlay-ad"], div[id*="overlay-ad"],
         div[class*="ad-banner"], div[id*="ad-banner"],
         div[class*="ad-container"], div[id*="ad-container"],
@@ -295,78 +294,6 @@ object ContentBlocker : AdBlockingEngine {
             max-width: 0 !important;
             opacity: 0 !important;
         }
-    """
-
-    /**
-     * Script injected at document start to neutralize popups (window.open),
-     * clickjacking overlay traps, and alert/prompt spam loops.
-     */
-    const val POPUP_NEUTRALIZATION_SCRIPT = """
-        (function() {
-            try {
-                // 1. Intercept window.open to prevent popup and popunder creation
-                var originalOpen = window.open;
-                window.open = function(url, target, features) {
-                    if (!url || url === 'about:blank') return null;
-                    var lower = (url + '').toLowerCase();
-                    // Block ad, popunder, or scam destinations
-                    if (lower.indexOf('popads') !== -1 ||
-                        lower.indexOf('propeller') !== -1 ||
-                        lower.indexOf('adcash') !== -1 ||
-                        lower.indexOf('exoclick') !== -1 ||
-                        lower.indexOf('bet365') !== -1 ||
-                        lower.indexOf('1xbet') !== -1 ||
-                        lower.indexOf('adsterra') !== -1 ||
-                        lower.indexOf('clickadu') !== -1 ||
-                        lower.indexOf('popcash') !== -1 ||
-                        lower.indexOf('doubleclick') !== -1 ||
-                        lower.indexOf('onclickalgo') !== -1 ||
-                        lower.indexOf('/pop.') !== -1 ||
-                        lower.indexOf('jump/next') !== -1) {
-                        return null;
-                    }
-                    // For legitimate user clicks, navigate within the same tab
-                    window.location.href = url;
-                    return window;
-                };
-
-                // 2. Clickjack & Transparent Overlay Interceptor
-                document.addEventListener('click', function(e) {
-                    var target = e.target;
-                    while (target && target.tagName !== 'A') {
-                        target = target.parentElement;
-                    }
-                    if (target && target.tagName === 'A') {
-                        var href = target.getAttribute('href') || '';
-                        var lowerHref = href.toLowerCase();
-                        if (lowerHref.indexOf('popads') !== -1 ||
-                            lowerHref.indexOf('propeller') !== -1 ||
-                            lowerHref.indexOf('adcash') !== -1 ||
-                            lowerHref.indexOf('exoclick') !== -1 ||
-                            lowerHref.indexOf('bet365') !== -1 ||
-                            lowerHref.indexOf('1xbet') !== -1 ||
-                            lowerHref.indexOf('adsterra') !== -1 ||
-                            lowerHref.indexOf('clickadu') !== -1 ||
-                            lowerHref.indexOf('popcash') !== -1 ||
-                            lowerHref.indexOf('onclickalgo') !== -1) {
-                            e.preventDefault();
-                            e.stopPropagation();
-                            return false;
-                        }
-                        // Remove target="_blank" from valid links to stay in current view
-                        if (target.getAttribute('target') === '_blank') {
-                            target.removeAttribute('target');
-                        }
-                    }
-                }, true);
-
-                // 3. Neutralize modal alert loops and beforeunload traps
-                window.alert = function() {};
-                window.confirm = function() { return true; };
-                window.prompt = function() { return null; };
-                window.onbeforeunload = null;
-            } catch (e) {}
-        })();
     """
 
     /**

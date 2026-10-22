@@ -233,26 +233,30 @@ object SecurityPolicy {
                     };
                 }
 
-                // 5. Video Ad Auto-Skipper & Fast-Forward (Targeted for YouTube and video ad containers)
-                if (window.__veyra_ad_interval) {
-                    clearInterval(window.__veyra_ad_interval);
-                }
-                window.__veyra_ad_interval = setInterval(function() {
-                    try {
-                        var skipBtn = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern, .videoAdUiSkipButton, .ytp-ad-skip-button-slot');
-                        if (skipBtn) {
-                            skipBtn.click();
-                        }
-                        var ytpPlayer = document.querySelector('.html5-video-player.ad-showing, .html5-video-player.ad-interrupting');
-                        if (ytpPlayer) {
-                            var v = ytpPlayer.querySelector('video');
-                            if (v && v.duration && v.duration < 120 && !v.paused) {
-                                v.currentTime = v.duration;
-                                v.playbackRate = 16.0;
+                // 5. Video Ad Auto-Skipper & Fast-Forward (Targeted for YouTube top-level window only)
+                var host = (window.location.hostname || '').toLowerCase();
+                var isYouTube = host === 'www.youtube.com' || host === 'm.youtube.com' || host.indexOf('youtube.com') !== -1;
+                if (isYouTube && window === window.top) {
+                    if (window.__veyra_ad_interval) {
+                        clearInterval(window.__veyra_ad_interval);
+                    }
+                    window.__veyra_ad_interval = setInterval(function() {
+                        try {
+                            var skipBtn = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern, .videoAdUiSkipButton, .ytp-ad-skip-button-slot');
+                            if (skipBtn) {
+                                skipBtn.click();
                             }
-                        }
-                    } catch (e) {}
-                }, 1000);
+                            var ytpPlayer = document.querySelector('.html5-video-player.ad-showing, .html5-video-player.ad-interrupting');
+                            if (ytpPlayer) {
+                                var v = ytpPlayer.querySelector('video');
+                                if (v && v.duration && v.duration < 120 && !v.paused) {
+                                    v.currentTime = v.duration;
+                                    v.playbackRate = 16.0;
+                                }
+                            }
+                        } catch (e) {}
+                    }, 1000);
+                }
 
                 // 6. Anti-Popup & Clickjack Neutralization
                 var origOpen = window.open;
@@ -274,8 +278,8 @@ object SecurityPolicy {
                         lower.indexOf('jump/next') !== -1) {
                         return null;
                     }
-                    window.location.href = url;
-                    return window;
+                    // Block unwanted popups without hijacking active tab navigation
+                    return null;
                 };
 
                 document.addEventListener('click', function(e) {
@@ -319,11 +323,11 @@ object SecurityPolicy {
                     document.head.appendChild(meta);
                 }
 
-                // 8. Cosmetic CSS style injection
+                // 8. Desktop TV Presentation & Base Cosmetic CSS
                 if (document.head && !document.getElementById('veyra-tv-desktop-style')) {
                     var st = document.createElement('style');
                     st.id = 'veyra-tv-desktop-style';
-                    st.textContent = '::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; } * { -webkit-font-smoothing: antialiased; } div[class*="pop-"], div[id*="pop-"], div[class*="overlay-ad"], div[class*="ad-banner"], div[class*="ad-container"], div[class*="adsbygoogle"], ins.adsbygoogle, iframe[src*="doubleclick"], iframe[src*="popads"], iframe[src*="propellerads"], .ad-placement, .advertisement, a[href*="popads.net"], a[href*="propellerads.com"], a[href*="bet365.com"], .ad-showing, .video-ads, [class*="companion-ad"], .interstitial-ad { display: none !important; visibility: hidden !important; pointer-events: none !important; width: 0 !important; height: 0 !important; }';
+                    st.textContent = '::-webkit-scrollbar { width: 6px; height: 6px; } ::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.3); border-radius: 3px; } * { -webkit-font-smoothing: antialiased; } div[class*="overlay-ad"], div[class*="ad-banner"], div[class*="ad-container"], div[class*="adsbygoogle"], ins.adsbygoogle, iframe[src*="doubleclick"], iframe[src*="popads"], iframe[src*="propellerads"], .ad-placement, .advertisement, a[href*="popads.net"], a[href*="propellerads.com"], a[href*="bet365.com"], .ad-showing, .video-ads, [class*="companion-ad"], .interstitial-ad { display: none !important; visibility: hidden !important; pointer-events: none !important; width: 0 !important; height: 0 !important; }';
                     document.head.appendChild(st);
                 }
             } catch (e) {}

@@ -43,10 +43,10 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
 
         /**
          * Identifies media streaming manifests, segment chunks, DRM licenses, and audio/video resources.
-         * Ensures legitimate streaming data (.m3u8, .mpd, .m4s, .ts, .mp4, .webm, .m4a, Widevine)
+         * Ensures legitimate streaming data (.m3u8, .mpd, .m4s, .ts, .mp4, .webm, .m4a, .vtt, .srt, Range requests)
          * passes through cleanly without being intercepted or throttled, unless originated from an ad server.
          */
-        fun isMediaOrStreamingResource(url: String, host: String): Boolean {
+        fun isMediaOrStreamingResource(url: String, host: String, request: WebResourceRequest? = null): Boolean {
             val lowerUrl = url.lowercase()
             val lowerHost = host.lowercase()
 
@@ -62,13 +62,25 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
                 return false
             }
 
-            return lowerUrl.contains(".m3u8") ||
+            // HTTP Range request header indicates media segment chunk streaming
+            val isRangeRequest = request?.requestHeaders?.let { headers ->
+                headers.keys.any { it.equals("Range", ignoreCase = true) }
+            } ?: false
+
+            return isRangeRequest ||
+                    lowerUrl.contains(".m3u8") ||
                     lowerUrl.contains(".mpd") ||
                     lowerUrl.contains(".m4s") ||
                     lowerUrl.contains(".ts") ||
                     lowerUrl.contains(".mp4") ||
                     lowerUrl.contains(".webm") ||
                     lowerUrl.contains(".m4a") ||
+                    lowerUrl.contains(".vtt") ||
+                    lowerUrl.contains(".srt") ||
+                    lowerUrl.contains("/pl/") ||
+                    lowerUrl.contains("/playlist") ||
+                    lowerUrl.contains("/manifest") ||
+                    lowerUrl.contains("/hls/") ||
                     lowerUrl.contains("widevine") ||
                     lowerUrl.contains("license") ||
                     lowerUrl.contains("googlevideo.com") ||
@@ -82,6 +94,7 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
 
     private val allowlist = ConcurrentHashMap.newKeySet<String>()
     private val blockedDomains = ConcurrentHashMap.newKeySet<String>()
+    private val thirdPartyOnlyDomains = ConcurrentHashMap.newKeySet<String>()
     private val exceptionDomains = ConcurrentHashMap.newKeySet<String>()
     private val cosmeticSelectors = ConcurrentHashMap.newKeySet<String>()
     private val domainCosmeticSelectors = ConcurrentHashMap<String, MutableSet<String>>()
@@ -135,6 +148,11 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
 
     /**
      * Parses an ABP / EasyList standard rule string.
+     * Supports:
+     * - Cosmetic element hiding: ##selector and domain##selector
+     * - Exception rules: @@||domain^
+     * - Domain blocking: ||domain^ with $third-party option awareness
+     * - Substring patterns
      */
     fun parseRule(rawRule: String) {
         val rule = rawRule.trim()
@@ -175,9 +193,13 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
 
         // 3. Domain blocking rule (||domain.com^ options)
         if (rule.startsWith("||")) {
+            val isThirdParty = rule.contains("\$third-party")
             val endIdx = rule.indexOf('^').let { if (it == -1) rule.indexOf('$') else it }
             val domain = (if (endIdx != -1) rule.substring(2, endIdx) else rule.substring(2)).trim().lowercase()
             if (domain.isNotEmpty()) {
+                if (isThirdParty) {
+                    thirdPartyOnlyDomains.add(domain)
+                }
                 blockedDomains.add(domain)
             }
             return
@@ -217,18 +239,18 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
             return null
         }
 
-        // 4. Protect essential OTT streaming resources
-        if (isOttStreamingResource(requestUrl, requestHost, mainUrl)) {
+        // 4. Protect essential streaming and media resources (including byte-range chunk requests)
+        if (isOttStreamingResource(requestUrl, requestHost, mainUrl, request)) {
             return null
         }
 
         // 5. Match against blocked domains
-        if (isDomainBlocked(requestHost)) {
+        if (isDomainBlocked(requestHost, mainUrl)) {
             return ContentBlocker.createBlockedResponse()
         }
 
-        // 6. Match against substring rules or popups/redirects
-        if (matchesUrlRules(requestUrl) || ContentBlocker.isRedirectOrPopupUrl(requestUrl)) {
+        // 6. Match against URL filter substrings
+        if (matchesUrlRules(requestUrl)) {
             return ContentBlocker.createBlockedResponse()
         }
 
@@ -259,7 +281,7 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
             return null
         }
 
-        if (isDomainBlocked(host) || matchesUrlRules(url) || ContentBlocker.isRedirectOrPopupUrl(url)) {
+        if (isDomainBlocked(host, mainUrl) || matchesUrlRules(url)) {
             return ContentBlocker.createBlockedResponse()
         }
 
@@ -272,10 +294,29 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
         return ContentBlocker.isHostInSet(normalized, exceptionDomains)
     }
 
-    private fun isDomainBlocked(host: String): Boolean {
+    private fun isDomainBlocked(host: String, documentUrl: String? = null): Boolean {
         if (host.isBlank()) return false
         val normalized = ContentBlocker.normalizeHost(host) ?: return false
+        if (thirdPartyOnlyDomains.isNotEmpty() && ContentBlocker.isHostInSet(normalized, thirdPartyOnlyDomains)) {
+            if (!isThirdParty(normalized, documentUrl)) {
+                return false
+            }
+        }
         return ContentBlocker.isHostInSet(normalized, blockedDomains)
+    }
+
+    fun isThirdParty(requestHost: String, documentUrl: String?): Boolean {
+        if (documentUrl.isNullOrBlank()) return true
+        val docHost = ContentBlocker.extractHostFromUrl(documentUrl) ?: return true
+        if (requestHost.equals(docHost, ignoreCase = true)) return false
+        val reqParts = requestHost.split('.').filter { it.isNotEmpty() }
+        val docParts = docHost.split('.').filter { it.isNotEmpty() }
+        if (reqParts.size >= 2 && docParts.size >= 2) {
+            val reqRoot = reqParts.takeLast(2).joinToString(".")
+            val docRoot = docParts.takeLast(2).joinToString(".")
+            if (reqRoot.equals(docRoot, ignoreCase = true)) return false
+        }
+        return true
     }
 
     private fun matchesUrlRules(url: String): Boolean {
@@ -288,9 +329,9 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
         return false
     }
 
-    private fun isOttStreamingResource(url: String, host: String, documentUrl: String): Boolean {
-        // Protect DRM licenses and media segments across all streaming platforms and CDNs
-        return isMediaOrStreamingResource(url, host)
+    private fun isOttStreamingResource(url: String, host: String, documentUrl: String, request: WebResourceRequest? = null): Boolean {
+        // Protect DRM licenses, subtitles, media segments, and byte-range streams across CDNs
+        return isMediaOrStreamingResource(url, host, request)
     }
 
     override fun shouldBlockNavigation(url: String?): Boolean {

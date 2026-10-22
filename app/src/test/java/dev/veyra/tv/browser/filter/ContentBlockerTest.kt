@@ -96,8 +96,11 @@ class ContentBlockerTest {
         assertTrue(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("display: none !important"))
         assertTrue(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("pointer-events: none !important"))
         assertTrue(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("popads.net"))
-        assertTrue(ContentBlocker.POPUP_NEUTRALIZATION_SCRIPT.contains("window.open"))
-        assertTrue(ContentBlocker.POPUP_NEUTRALIZATION_SCRIPT.contains("_blank"))
+        // Confirmed removal of overbroad generic prefix selectors
+        assertFalse(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("div[class*=\"pop-\"]"))
+        assertFalse(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("div[id*=\"pop-\"]"))
+        // Confirmed targeted replacement
+        assertTrue(ContentBlocker.COSMETIC_BLOCKING_CSS.contains("popup-ad"))
     }
 
     @Test

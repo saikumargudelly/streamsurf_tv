@@ -155,6 +155,53 @@ class AdBlockingEngineTest {
         assertTrue(css.contains("visibility: hidden !important"))
         assertTrue(css.contains("adsbygoogle"))
         assertTrue(css.contains("ad-banner"))
+        // Confirmed removal of overbroad generic prefix selectors
+        assertFalse(css.contains("div[class*=\"pop-\"]"))
+        assertFalse(css.contains("div[id*=\"pop-\"]"))
+    }
+
+    @Test
+    fun testMediaStreamingImmunityWithSubtitlesAndManifests() {
+        // Subtitles (.vtt, .srt)
+        assertNull(engine.shouldInterceptUrl("https://subtitles.cdn.com/sub/english.vtt", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://media.org/captions/spanish.srt", "https://cinehd.vc"))
+
+        // Streaming playlists and manifests
+        assertNull(engine.shouldInterceptUrl("https://gossamerandgold.space/pl/123/master.m3u8", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://stream.server.com/playlist/720p.m3u8", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://video.edge.net/manifest/video.mpd", "https://cinehd.vc"))
+    }
+
+    @Test
+    fun testThirdPartyFilterOption() {
+        val filterEngine = engine as FilterListAdBlockingEngine
+        filterEngine.parseRule("||tracker.example.com^\$third-party")
+
+        // First-party context: request from tracker.example.com on example.com should NOT be blocked
+        assertNull(filterEngine.shouldInterceptUrl("https://tracker.example.com/log.js", "https://example.com/movie"))
+
+        // Third-party context: request from tracker.example.com on unrelated.org SHOULD be blocked
+        assertNotNull(filterEngine.shouldInterceptUrl("https://tracker.example.com/log.js", "https://unrelated.org/watch"))
+    }
+
+    @Test
+    fun testExceptionRules() {
+        val filterEngine = engine as FilterListAdBlockingEngine
+        filterEngine.parseRule("||partner-ads.com^")
+        assertTrue(filterEngine.isBlocked("partner-ads.com"))
+
+        // Add exception rule
+        filterEngine.parseRule("@@||partner-ads.com^")
+        assertNull(filterEngine.shouldInterceptUrl("https://partner-ads.com/ad.js", "https://example.com"))
+    }
+
+    @Test
+    fun testSubresourcesNotBlockedByPopupHeuristics() {
+        // Legitimate streaming and media subresources containing 'pop' or 'jump' in path or query
+        // must NOT be blocked by popup/redirect heuristics in subresource filtering
+        assertNull(engine.shouldInterceptUrl("https://streaming.cdn.net/media/pop_song.mp4", "https://example.com"))
+        assertNull(engine.shouldInterceptUrl("https://streaming.cdn.net/stream/jump_cut.ts", "https://example.com"))
+        assertNull(engine.shouldInterceptUrl("https://media.server.org/api/get_token?action=pop", "https://example.com"))
     }
 
     @Test
