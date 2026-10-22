@@ -80,6 +80,7 @@ class MainActivity : AppCompatActivity() {
             toolbarProvider = { binding.navToolbar }
         )
         pointerController.initialize()
+        updatePointerStatusUI(pointerController.isPointerModeActive)
     }
 
     override fun onNewIntent(intent: Intent) {
@@ -122,8 +123,14 @@ class MainActivity : AppCompatActivity() {
                 }
             },
             onFullscreenStateChanged = { isFullscreen ->
-                if (!isFullscreen) {
-                    controller.webView?.requestFocus()
+                if (isFullscreen) {
+                    binding.tvCursorView.visibility = View.GONE
+                } else {
+                    if (pointerController.isPointerModeActive) {
+                        binding.tvCursorView.visibility = View.VISIBLE
+                    } else {
+                        controller.webView?.requestFocus()
+                    }
                 }
             }
         )
@@ -309,8 +316,10 @@ class MainActivity : AppCompatActivity() {
         updateNextDnsStatusUI()
         updatePointerStatusUI(pointerController.isPointerModeActive)
         refreshBookmarksShelf()
-        binding.inputUrlOrSearch.post {
-            binding.inputUrlOrSearch.requestFocus()
+        if (!pointerController.isPointerModeActive) {
+            binding.inputUrlOrSearch.post {
+                binding.inputUrlOrSearch.requestFocus()
+            }
         }
     }
 
@@ -497,15 +506,16 @@ class MainActivity : AppCompatActivity() {
     }
 
     fun showHomeScreen() {
-        pointerController.setPointerMode(false)
-        binding.btnNavPointer.isSelected = false
         binding.browserContainer.visibility = View.GONE
         binding.fullscreenContainer.visibility = View.GONE
         binding.homeContainer.visibility = View.VISIBLE
         controller.onPause()
         updateShieldStatusUI(ContentBlocker.isEnabled)
+        updatePointerStatusUI(pointerController.isPointerModeActive)
         refreshBookmarksShelf()
-        binding.inputUrlOrSearch.requestFocus()
+        if (!pointerController.isPointerModeActive) {
+            binding.inputUrlOrSearch.requestFocus()
+        }
     }
 
     private var zoomOverlayRunnable: Runnable? = null
@@ -580,7 +590,8 @@ class MainActivity : AppCompatActivity() {
      */
     override fun dispatchKeyEvent(rawEvent: KeyEvent): Boolean {
         val event = TvKeyTranslator.translate(rawEvent)
-        if (binding.browserContainer.visibility == View.VISIBLE && pointerController.isPointerModeActive) {
+        val isEditingText = currentFocus is android.widget.EditText
+        if (pointerController.isPointerModeActive && !isEditingText && !webChromeClient.isFullscreen) {
             if (pointerController.handleKeyEvent(event)) {
                 return true
             }

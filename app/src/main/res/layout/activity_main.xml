@@ -1475,8 +1475,8 @@
     <!-- 4. VIRTUAL TV CURSOR OVERLAY (Always floats on top of everything) -->
     <ImageView
         android:id="@+id/tvCursorView"
-        android:layout_width="32dp"
-        android:layout_height="32dp"
+        android:layout_width="30dp"
+        android:layout_height="30dp"
         android:elevation="50dp"
         android:src="@drawable/ic_tv_pointer"
         android:visibility="gone" />
