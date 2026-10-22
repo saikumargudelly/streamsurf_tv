@@ -4,16 +4,24 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <!-- Left red ribbon -->
+    <!-- Cinema Onyx Squircle Container -->
+    <path
+        android:fillColor="#0D0D0D"
+        android:pathData="M10,4h28a6,6 0 0,1 6,6v28a6,6 0 0,1 -6,6h-28a6,6 0 0,1 -6,-6v-28a6,6 0 0,1 6,-6z" />
+    <!-- Left Vertical Leg with Curved Bottom -->
     <path
         android:fillColor="#E50914"
-        android:pathData="M14,6h6v36h-6z" />
-    <!-- Right red ribbon -->
+        android:pathData="M12.5,9h6.2v29.5c-2.1,0.5 -4.2,0.9 -6.2,1.2z" />
+    <!-- Right Vertical Leg with Curved Bottom -->
     <path
         android:fillColor="#E50914"
-        android:pathData="M28,6h6v36h-6z" />
-    <!-- Diagonal red ribbon -->
+        android:pathData="M29.3,9h6.2v39.7c-2,-0.3 -4.1,-0.7 -6.2,-1.2z" />
+    <!-- Authentic Fold Drop-Shadow on Left Leg -->
+    <path
+        android:fillColor="#55000000"
+        android:pathData="M12.5,22h6.2v16.5c-2.1,0.5 -4.2,0.9 -6.2,1.2z" />
+    <!-- Diagonal Folded 3D Ribbon in Rich Netflix Crimson -->
     <path
         android:fillColor="#B81D24"
-        android:pathData="M14,6l14,36h6l-14,-36z" />
+        android:pathData="M12.5,9h6.2l16.8,31.7h-6.2l-16.8,-31.7z" />
 </vector>

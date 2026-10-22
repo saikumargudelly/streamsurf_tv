@@ -4,14 +4,21 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <!-- Crunchyroll Vibrant Orange Anime Eye -->
+    <!-- Dark Onyx Background Container -->
+    <path
+        android:fillColor="#0D0D0D"
+        android:pathData="M10,4h28a6,6 0 0,1 6,6v28a6,6 0 0,1 -6,6h-28a6,6 0 0,1 -6,-6v-28a6,6 0 0,1 6,-6z" />
+    <!-- Authentic Crunchyroll Anime Eye Emblem -->
+    <!-- Outer Vibrant Orange Circle with Crescent Cut -->
     <path
         android:fillColor="#F47521"
-        android:pathData="M24,8 C15.2,8 8,15.2 8,24 C8,32.8 15.2,40 24,40 C32.8,40 40,32.8 40,24 C40,15.2 32.8,8 24,8 Z M22,34 C16.5,34 12,29.5 12,24 C12,18.5 16.5,14 22,14 C27.5,14 32,18.5 32,24 C32,29.5 27.5,34 22,34 Z" />
+        android:pathData="M24,9 C15.7,9 9,15.7 9,24 C9,32.3 15.7,39 24,39 C32.3,39 39,32.3 39,24 C39,15.7 32.3,9 24,9 Z M21.5,35 C15.4,35 10.5,30.1 10.5,24 C10.5,17.9 15.4,13 21.5,13 C27.6,13 32.5,17.9 32.5,24 C32.5,30.1 27.6,35 21.5,35 Z" />
+    <!-- Inner White Eye Silhouette -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M23,17 C19.1,17 16,20.1 16,24 C16,27.9 19.1,31 23,31 C26.9,31 30,27.9 30,24 C30,20.1 26.9,17 23,17 Z" />
+        android:pathData="M23,16 C18.6,16 15,19.6 15,24 C15,28.4 18.6,32 23,32 C27.4,32 31,28.4 31,24 C31,19.6 27.4,16 23,16 Z" />
+    <!-- Inner Orange Pupil -->
     <path
         android:fillColor="#F47521"
-        android:pathData="M24,20 C21.8,20 20,21.8 20,24 C20,26.2 21.8,28 24,28 C26.2,28 28,26.2 28,24 C28,21.8 26.2,20 24,20 Z" />
+        android:pathData="M24,19.5 C21.5,19.5 19.5,21.5 19.5,24 C19.5,26.5 21.5,28.5 24,28.5 C26.5,28.5 28.5,26.5 28.5,24 C28.5,21.5 26.5,19.5 24,19.5 Z" />
 </vector>

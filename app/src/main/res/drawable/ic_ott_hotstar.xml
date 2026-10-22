@@ -4,12 +4,48 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <!-- Blue rounded background badge -->
+    <!-- Deep Space Navy Container -->
     <path
-        android:fillColor="#0C1E3C"
-        android:pathData="M10,8h28a4,4 0 0,1 4,4v24a4,4 0 0,1 -4,4h-28a4,4 0 0,1 -4,-4v-24a4,4 0 0,1 4,-4z" />
-    <!-- Golden Star -->
+        android:fillColor="#081028"
+        android:pathData="M10,4h28a6,6 0 0,1 6,6v28a6,6 0 0,1 -6,6h-28a6,6 0 0,1 -6,-6v-28a6,6 0 0,1 6,-6z" />
+    <!-- Authentic Dimensional Faceted Hotstar Starburst -->
+    <!-- Top Arm: Highlight / Shadow Facets -->
+    <path
+        android:fillColor="#FFD54F"
+        android:pathData="M24,25 L20,20 L24,11 Z" />
+    <path
+        android:fillColor="#FF9100"
+        android:pathData="M24,25 L24,11 L28,20 Z" />
+    <!-- Top-Right Arm: Highlight / Shadow Facets -->
+    <path
+        android:fillColor="#FFE082"
+        android:pathData="M24,25 L28,20 L36,19.5 Z" />
+    <path
+        android:fillColor="#FF6D00"
+        android:pathData="M24,25 L36,19.5 L29.5,27 Z" />
+    <!-- Bottom-Right Arm: Highlight / Shadow Facets -->
+    <path
+        android:fillColor="#FFCA28"
+        android:pathData="M24,25 L29.5,27 L31.5,33.5 Z" />
+    <path
+        android:fillColor="#E65100"
+        android:pathData="M24,25 L31.5,33.5 L24,29 Z" />
+    <!-- Bottom-Left Arm: Shadow / Highlight Facets -->
+    <path
+        android:fillColor="#F57C00"
+        android:pathData="M24,25 L24,29 L16.5,33.5 Z" />
+    <path
+        android:fillColor="#FFB300"
+        android:pathData="M24,25 L16.5,33.5 L18.5,27 Z" />
+    <!-- Top-Left Arm: Shadow / Highlight Facets -->
+    <path
+        android:fillColor="#EF6C00"
+        android:pathData="M24,25 L18.5,27 L12,19.5 Z" />
     <path
         android:fillColor="#FFC107"
-        android:pathData="M24,14l3.1,6.3 6.9,1 -5,4.9 1.2,6.8 -6.2,-3.3 -6.2,3.3 1.2,-6.8 -5,-4.9 6.9,-1z" />
+        android:pathData="M24,25 L12,19.5 L20,20 Z" />
+    <!-- Core Dimension Glimmer Accent -->
+    <path
+        android:fillColor="#FFF8E1"
+        android:pathData="M24,22 L25.5,25 L24,26.5 L22.5,25 Z" />
 </vector>

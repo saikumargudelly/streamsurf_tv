@@ -665,8 +665,8 @@
                         android:nextFocusDown="@+id/tileRecentWiki">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_ott_youtube"
                             tools:ignore="ContentDescription" />
 
@@ -705,8 +705,8 @@
                         android:nextFocusDown="@+id/tileRecentHN">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_ott_prime"
                             tools:ignore="ContentDescription" />
 
@@ -745,8 +745,8 @@
                         android:nextFocusDown="@+id/tileRecentGithub">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_ott_hotstar"
                             tools:ignore="ContentDescription" />
 
@@ -785,8 +785,8 @@
                         android:nextFocusDown="@+id/tileRecentCricbuzz">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_ott_netflix"
                             tools:ignore="ContentDescription" />
 
@@ -825,8 +825,8 @@
                         android:nextFocusDown="@+id/tileRecentBbc">
 
                         <ImageView
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
+                            android:layout_width="36dp"
+                            android:layout_height="36dp"
                             android:src="@drawable/ic_ott_disney"
                             tools:ignore="ContentDescription" />
 

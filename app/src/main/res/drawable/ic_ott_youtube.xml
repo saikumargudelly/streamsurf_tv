@@ -4,12 +4,12 @@
     android:height="48dp"
     android:viewportWidth="48"
     android:viewportHeight="48">
-    <!-- YouTube Red Rounded Rectangle -->
+    <!-- Authentic YouTube Play Button Pill -->
     <path
         android:fillColor="#FF0000"
-        android:pathData="M43.2,14.8c-0.5,-1.9 -2,-3.4 -3.9,-3.9C35.8,10 24,10 24,10s-11.8,0 -15.3,0.9c-1.9,0.5 -3.4,2 -3.9,3.9C4,18.3 4,24 4,24s0,5.7 0.9,9.2c0.5,1.9 2,3.4 3.9,3.9C12.2,38 24,38 24,38s11.8,0 15.3,-0.9c1.9,-0.5 3.4,-2 3.9,-3.9C44,29.7 44,24 44,24s0,-5.7 -0.8,-9.2z" />
-    <!-- White Play Triangle -->
+        android:pathData="M40.2,14.6 C39.6,12.7 38.1,11.2 36.2,10.7 C32.8,9.8 24.0,9.8 24.0,9.8 C24.0,9.8 15.2,9.8 11.8,10.7 C9.9,11.2 8.4,12.7 7.8,14.6 C6.9,18.0 6.9,24.0 6.9,24.0 C6.9,24.0 6.9,30.0 7.8,33.4 C8.4,35.3 9.9,36.8 11.8,37.3 C15.2,38.2 24.0,38.2 24.0,38.2 C24.0,38.2 32.8,38.2 36.2,37.3 C38.1,36.8 39.6,35.3 40.2,33.4 C41.1,30.0 41.1,24.0 41.1,24.0 C41.1,24.0 41.1,18.0 40.2,14.6 Z" />
+    <!-- Centered Sharp White Play Triangle -->
     <path
         android:fillColor="#FFFFFF"
-        android:pathData="M20,18l11,6 -11,6z" />
+        android:pathData="M20.5,17.5 L20.5,30.5 L30.5,24.0 Z" />
 </vector>
