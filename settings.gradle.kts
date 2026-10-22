@@ -20,5 +20,5 @@ dependencyResolutionManagement {
     }
 }
 
-rootProject.name = "VeyraTV"
+rootProject.name = "StreamSurfTV"
 include(":app")

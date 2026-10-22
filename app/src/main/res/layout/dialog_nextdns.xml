@@ -65,7 +65,7 @@
             android:buttonTint="@color/accent_primary"
             android:focusable="true"
             android:padding="12dp"
-            android:text="Enable NextDNS in Veyra TV"
+            android:text="Enable NextDNS in StreamSurf TV"
             android:textColor="@color/text_primary"
             android:textSize="14sp"
             android:textStyle="bold"
@@ -109,7 +109,7 @@
             android:layout_marginTop="8dp"
             android:textColor="@color/text_muted"
             android:textSize="11sp"
-            tools:text="DoH Endpoint: https://dns.nextdns.io/28a9b1/Veyra_TV/dns-query" />
+            tools:text="DoH Endpoint: https://dns.nextdns.io/28a9b1/StreamSurf_TV/dns-query" />
 
         <!-- System Private DNS Info Card -->
         <LinearLayout

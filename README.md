@@ -1,4 +1,4 @@
-# Veyra TV
+# StreamSurf TV
 
 > Fast, private, remote-first web browser engineered from the ground up for Android TV and Google TV.
 
@@ -10,18 +10,18 @@
 [![Architecture](https://img.shields.io/badge/Architecture-Single--WebView%20%7C%20Low--RAM-orange)](https://github.com/saikumargudelly/streamsurf_tv)
 
 <p align="center">
-  <a href="https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/veyra-tv-release.apk">
+  <a href="https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/streamsurf-tv-release.apk">
     <img src="https://img.shields.io/badge/⬇️%20Download-Latest%20Release%20APK-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download Latest APK" height="40">
   </a>
   <br>
-  <sub>Direct download • <b>veyra-tv-release.apk</b> (Signed production build)</sub>
+  <sub>Direct download • <b>streamsurf-tv-release.apk</b> (Signed production build)</sub>
 </p>
 
 ---
 
 ## Overview
 
-**Veyra TV** is an original web browser designed specifically for television hardware and remote controls. It pairs a clean 10-foot UI with a built-in content blocker, custom DNS-over-HTTPS (NextDNS), smart video streaming immunity, virtual pointer navigation, and crash-resilient memory management.
+**StreamSurf TV** is an original web browser designed specifically for television hardware and remote controls. It pairs a clean 10-foot UI with a built-in content blocker, custom DNS-over-HTTPS (NextDNS), smart video streaming immunity, virtual pointer navigation, and crash-resilient memory management.
 
 <p align="center">
   <img src="docs/assets/demo_tv_navigation.gif" width="49%" alt="10-Foot Remote Navigation" />
@@ -32,7 +32,7 @@
 
 ## Key Features
 
-- 🛡️ **Veyra Shield Ad-Blocker**: EasyList rule interception, cosmetic CSS element hiding, anti-popup/clickjack neutralization, and video ad skipping.
+- 🛡️ **StreamSurf Shield Ad-Blocker**: EasyList rule interception, cosmetic CSS element hiding, anti-popup/clickjack neutralization, and video ad skipping.
 - 🌐 **Private DNS (NextDNS & DoH)**: Native DNS-over-HTTPS with custom NextDNS configuration ID and instant presets (Cloudflare, AdGuard, Quad9).
 - 🎯 **Remote-First TV UX**: Smooth D-pad focus indicators, safe overscan margins, and a toggleable **Virtual Mouse Pointer Mode** for desktop websites.
 - 🎬 **Zero-Stall Streaming Engine**: Smart media manifest and segment immunity (`.m3u8`, `.mpd`, `.ts`, `.m4s`, `.mp4`) preventing false-positive ad-blocking stalls.
@@ -60,9 +60,9 @@
 adb connect <TV-IP-ADDRESS>:5555
 
 # 2. Install the release APK
-adb install -r veyra-tv-release.apk
+adb install -r streamsurf-tv-release.apk
 
-# 3. Launch Veyra TV
+# 3. Launch StreamSurf TV
 adb shell am start -n dev.veyra.tv.browser/dev.veyra.tv.browser.ui.MainActivity
 ```
 
@@ -78,7 +78,7 @@ cd streamsurf_tv
 # Build signed release APK
 ./gradlew assembleRelease copyReleaseApkToDist
 ```
-The compiled APK will be output to `dist/veyra-tv-release.apk`.
+The compiled APK will be output to `dist/streamsurf-tv-release.apk`.
 
 ---
 

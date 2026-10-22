@@ -25,13 +25,13 @@ class NextDnsConfigTest {
 
     @Test
     fun testBuildDoHUrl_fromPlainId() {
-        val expected = "https://dns.nextdns.io/28a9b1/Veyra_TV/dns-query"
+        val expected = "https://dns.nextdns.io/28a9b1/StreamSurf_TV/dns-query"
         assertEquals(expected, NextDnsConfig.buildDoHUrl("28a9b1"))
     }
 
     @Test
     fun testBuildDoHUrl_fromFullUrl() {
-        val expected = "https://dns.nextdns.io/28a9b1/Veyra_TV/dns-query"
+        val expected = "https://dns.nextdns.io/28a9b1/StreamSurf_TV/dns-query"
         assertEquals(expected, NextDnsConfig.buildDoHUrl("https://dns.nextdns.io/28a9b1"))
     }
 

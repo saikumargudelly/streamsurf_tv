@@ -1,7 +1,7 @@
 #!/bin/bash
 set -euo pipefail
 
-# Veyra TV - Comprehensive, Repeatable Performance Measurement Benchmark
+# StreamSurf TV - Comprehensive, Repeatable Performance Measurement Benchmark
 # Measures:
 # 1. APK Size (bytes and MB) for Release and Debug builds
 # 2. Cold Startup Time (TotalTime from am start -W across multiple iterations)
@@ -15,7 +15,7 @@ DEBUG_APK="app/build/outputs/apk/debug/app-debug.apk"
 MAIN_ACTIVITY="dev.veyra.tv.browser.ui.MainActivity"
 
 echo "=================================================="
-echo " VEYRA TV: PERFORMANCE MEASUREMENT BENCHMARK"
+echo " STREAMSURF TV: PERFORMANCE MEASUREMENT BENCHMARK"
 echo "=================================================="
 
 # 1. APK Size Metrics

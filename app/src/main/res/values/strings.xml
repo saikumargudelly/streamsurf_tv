@@ -1,9 +1,9 @@
 <resources>
-    <string name="app_name">Veyra TV</string>
+    <string name="app_name">StreamSurf TV</string>
     <string name="app_description">Fast, private web browser for television</string>
     <string name="search_hint">Search Google or enter web address…</string>
     <string name="btn_go">Search</string>
-    <string name="home_title">Veyra TV</string>
+    <string name="home_title">StreamSurf TV</string>
     <string name="home_tagline">Fast, private web browser for television</string>
     <string name="home_shield_active">Shield: Active</string>
     <string name="home_shield_off">Shield: Off</string>

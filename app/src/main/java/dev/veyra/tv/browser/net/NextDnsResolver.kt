@@ -85,7 +85,7 @@ class NextDnsResolver(val dohEndpointUrl: String) {
             val conn = (URL(queryUrl).openConnection() as HttpURLConnection).apply {
                 requestMethod = "GET"
                 setRequestProperty("Accept", "application/dns-json")
-                setRequestProperty("User-Agent", "VeyraTV-NextDNS/1.0")
+                setRequestProperty("User-Agent", "StreamSurfTV-NextDNS/1.0")
                 connectTimeout = CONNECT_TIMEOUT_MS
                 readTimeout = READ_TIMEOUT_MS
                 instanceFollowRedirects = true

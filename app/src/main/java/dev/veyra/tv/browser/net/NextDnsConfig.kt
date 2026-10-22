@@ -7,7 +7,7 @@ package dev.veyra.tv.browser.net
 object NextDnsConfig {
 
     private const val DEFAULT_ENDPOINT = "https://dns.nextdns.io"
-    private const val DEVICE_TAG = "Veyra_TV"
+    private const val DEVICE_TAG = "StreamSurf_TV"
 
     /**
      * Extracts the raw NextDNS profile ID from user input.
@@ -39,7 +39,7 @@ object NextDnsConfig {
 
     /**
      * Constructs the full DNS-over-HTTPS (DoH) endpoint URL for queries.
-     * Appends device tag so the user can easily identify Veyra TV queries in their NextDNS dashboard.
+     * Appends device tag so the user can easily identify StreamSurf TV queries in their NextDNS dashboard.
      */
     fun buildDoHUrl(input: String): String {
         val trimmed = input.trim()
