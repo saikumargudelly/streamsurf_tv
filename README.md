@@ -11,7 +11,7 @@
 
 <p align="center">
   <a href="https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/veyra-tv-release.apk">
-    <img src="https://img.shields.io/badge/⬇️%20Download-Latest%20Release%20APK-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download Latest APK" height="42">
+    <img src="https://img.shields.io/badge/⬇️%20Download-Latest%20Release%20APK-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download Latest APK" height="40">
   </a>
   <br>
   <sub>Direct download • <b>veyra-tv-release.apk</b> (Signed production build)</sub>
@@ -19,74 +19,26 @@
 
 ---
 
-## 📥 Download & Releases
-
-Download the ready-to-install signed production APK directly to your computer or Android TV device:
-
-| Release | Package | Architecture | Direct Download |
-|:---|:---|:---|:---|
-| **Latest (`v0.1.0-alpha`)** | `veyra-tv-release.apk` (~4.7 MB) | Universal (ARM64 / ARMv7 / x86_64) | [**⬇️ Download Latest APK**](https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/veyra-tv-release.apk) |
-
-👉 **[View All Releases & Changelogs](https://github.com/saikumargudelly/streamsurf_tv/releases)**
-
----
-
 ## Overview
 
-**Veyra TV** is an original Android TV browser crafted specifically for television hardware and remote controls. Unlike desktop or mobile ports, Veyra combines a clean 10-foot UI with a built-in content blocker, custom DNS-over-HTTPS (NextDNS), smart video streaming immunity, virtual cursor navigation, and crash-resilient memory management.
+**Veyra TV** is an original web browser designed specifically for television hardware and remote controls. It pairs a clean 10-foot UI with a built-in content blocker, custom DNS-over-HTTPS (NextDNS), smart video streaming immunity, virtual pointer navigation, and crash-resilient memory management.
+
+<p align="center">
+  <img src="docs/assets/demo_tv_navigation.gif" width="49%" alt="10-Foot Remote Navigation" />
+  <img src="docs/assets/demo_video_streaming.gif" width="49%" alt="Zero-Stall Streaming Playback" />
+</p>
 
 ---
 
-## 🎬 UI / UX Showcase
+## Key Features
 
-<div align="center">
-
-### 1. Remote-First 10-Foot TV Interface & Fluid Navigation
-Fluid D-pad focus indicators, safe overscan margins, and quick launchpads designed for television remote controls.
-
-![TV Home & Remote Navigation](docs/assets/demo_tv_navigation.gif)
-
-<br>
-
-### 2. Built-in Private DNS & Custom NextDNS Setup
-Enter your manual NextDNS configuration ID or select secure DoH resolvers (Cloudflare, AdGuard, Quad9) directly on your TV.
-
-![Custom NextDNS Configuration](docs/assets/demo_nextdns_setup.gif)
-
-<br>
-
-### 3. Zero-Stall Streaming Media & Ad-Block Immunity
-Smart media segment (`.m3u8`, `.mpd`, `.ts`, `.mp4`) pass-through ensures uninterrupted 4K/1080p playback without false-positive ad-blocking buffering.
-
-![HD Video Streaming Playback](docs/assets/demo_video_streaming.gif)
-
-<br>
-
-### 4. YouTube TV & Leanback Media Player
-Seamless Leanback TV navigation and full remote control integration across desktop & TV web apps.
-
-![YouTube TV Leanback Navigation](docs/assets/demo_youtube_tv.gif)
-
-</div>
-
----
-
-## Key Highlights
-
-- 🛡️ **Veyra Shield Ad-Blocker**  
-  Network-level ad/tracker interception with EasyList rule parsing, cosmetic CSS element hiding, anti-popup/clickjack neutralization, and intelligent video ad auto-skipping.
-- 🌐 **Private DNS & Custom NextDNS**  
-  Native DNS-over-HTTPS (DoH) engine with full manual **NextDNS profile ID** configuration, plus instant presets for NextDNS, Cloudflare, AdGuard, and Quad9.
-- 🎯 **Remote-First TV UX & Virtual Mouse**  
-  Fluid D-pad navigation with high-contrast focus rings, overscan-safe layout, TV status badges, and an integrated **Virtual Mouse Pointer Mode** toggled with a single remote press for desktop websites.
-- 🎬 **Zero-Stall Streaming Media Engine**  
-  Smart media immunity ensures streaming manifests and video segments (`.m3u8`, `.mpd`, `.ts`, `.m4s`, `.mp4`) bypass false-positive ad rules for smooth 4K/1080p playback.
-- 📱 **Quick TV Sign-In Hub**  
-  One-click code sign-in launchpads for YouTube TV, Prime Video, Disney+ Begin, Hotstar QR, and Netflix TV.
-- 🪶 **Low-RAM Architecture & Crash Resiliency**  
-  Single-active-WebView design keeping host memory under ~130 MB PSS. Compliant Android WebView dead-process handling and rate-limited renderer recovery eliminate crash loops and system LMK kills.
-- 🔒 **Zero Telemetry & Local Session Persistence**  
-  No telemetry, analytics, or cloud backends. Streaming logins and cookies persist locally across reboots with strict TLS certificate validation.
+- 🛡️ **Veyra Shield Ad-Blocker**: EasyList rule interception, cosmetic CSS element hiding, anti-popup/clickjack neutralization, and video ad skipping.
+- 🌐 **Private DNS (NextDNS & DoH)**: Native DNS-over-HTTPS with custom NextDNS configuration ID and instant presets (Cloudflare, AdGuard, Quad9).
+- 🎯 **Remote-First TV UX**: Smooth D-pad focus indicators, safe overscan margins, and a toggleable **Virtual Mouse Pointer Mode** for desktop websites.
+- 🎬 **Zero-Stall Streaming Engine**: Smart media manifest and segment immunity (`.m3u8`, `.mpd`, `.ts`, `.m4s`, `.mp4`) preventing false-positive ad-blocking stalls.
+- 📱 **Quick TV Sign-In**: Instant code sign-in launchpads for YouTube TV, Prime Video, Disney+ Begin, Hotstar QR, and Netflix TV.
+- 🪶 **Low-RAM Architecture**: Single active WebView (< 130 MB host PSS) with compliant dead-process cleanup and rate-limited crash recovery.
+- 🔒 **Zero Telemetry**: No trackers, analytics, or cloud backends. Authentication sessions persist locally with strict TLS enforcement.
 
 ---
 
@@ -94,10 +46,10 @@ Seamless Leanback TV navigation and full remote control integration across deskt
 
 | Key | Navigation Function |
 |---|---|
-| **D-Pad (Up / Down / Left / Right)** | Moves focus across tiles, omnibar, and web page links (or moves cursor in Pointer mode) |
-| **OK / Center** | Clicks focused element, enters video fullscreen, or clicks under virtual cursor |
-| **BACK** | 1. Closes modals / Exits fullscreen video<br>2. Navigates back in page history<br>3. Returns to Veyra TV Home screen |
-| **MENU / F2** | Jumps focus instantly to the top navigation toolbar |
+| **D-Pad (Up / Down / Left / Right)** | Move focus across tiles, omnibar, and web links (or moves cursor in Pointer mode) |
+| **OK / Center** | Click focused element, toggle fullscreen video, or click under virtual cursor |
+| **BACK** | Close modals / Exit fullscreen video / Go back in history / Return to TV Home |
+| **MENU / F2** | Jump focus directly to the top navigation toolbar |
 
 ---
 
@@ -107,7 +59,7 @@ Seamless Leanback TV navigation and full remote control integration across deskt
 # 1. Connect to Android TV via ADB
 adb connect <TV-IP-ADDRESS>:5555
 
-# 2. Install the downloaded release APK
+# 2. Install the release APK
 adb install -r veyra-tv-release.apk
 
 # 3. Launch Veyra TV
@@ -118,18 +70,10 @@ adb shell am start -n dev.veyra.tv.browser/dev.veyra.tv.browser.ui.MainActivity
 
 ## Build from Source
 
-### Prerequisites
-- JDK 17 (`export JAVA_HOME=...`)
-- Android SDK (API 34/35 platform tools)
-
-### Commands
 ```bash
 # Clone the repository
 git clone https://github.com/saikumargudelly/streamsurf_tv.git
 cd streamsurf_tv
-
-# Run unit tests
-./gradlew test
 
 # Build signed release APK
 ./gradlew assembleRelease copyReleaseApkToDist
