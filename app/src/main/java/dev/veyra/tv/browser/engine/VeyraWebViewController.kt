@@ -156,20 +156,38 @@ class VeyraWebViewController(
         }
     }
 
+    private var lastCrashTimestamp: Long = 0L
+    private var consecutiveCrashCount: Int = 0
+
     /**
      * Recovers from renderer process termination by tearing down the invalid
      * native WebView and re-instantiating a fresh active WebView.
+     * Prevents infinite crash loops if the current URL repeatedly crashes the renderer.
      */
     fun recoverRenderer(
         client: VeyraWebViewClient? = null,
-        chromeClient: VeyraWebChromeClient? = null
+        chromeClient: VeyraWebChromeClient? = null,
+        onRepeatedCrash: (() -> Unit)? = null
     ) {
         val targetClient = client ?: cachedClient ?: return
         val targetChromeClient = chromeClient ?: cachedChromeClient ?: return
         val lastUrl = currentUrl ?: webView?.url
-        destroyWebView()
+
+        val now = System.currentTimeMillis()
+        if (now - lastCrashTimestamp < 30_000L) {
+            consecutiveCrashCount++
+        } else {
+            consecutiveCrashCount = 1
+        }
+        lastCrashTimestamp = now
+
+        destroyWebView(isDeadProcess = true)
         initializeWebView(targetClient, targetChromeClient)
-        if (!lastUrl.isNullOrEmpty()) {
+
+        if (consecutiveCrashCount > 2) {
+            consecutiveCrashCount = 0
+            onRepeatedCrash?.invoke()
+        } else if (!lastUrl.isNullOrEmpty()) {
             loadUrl(lastUrl)
         }
     }
@@ -182,13 +200,20 @@ class VeyraWebViewController(
         webView?.restoreState(inState)
     }
 
-    fun destroyWebView() {
+    /**
+     * Cleans up and destroys the active WebView.
+     * When isDeadProcess is true (called from onRenderProcessGone), avoids calling
+     * any WebView methods other than removeView and destroy() per Android WebView API contract.
+     */
+    fun destroyWebView(isDeadProcess: Boolean = false) {
         webView?.let { wv ->
             container.removeView(wv)
-            wv.stopLoading()
-            wv.loadUrl("about:blank")
-            wv.clearHistory()
-            wv.removeAllViews()
+            if (!isDeadProcess) {
+                wv.stopLoading()
+                wv.loadUrl("about:blank")
+                wv.clearHistory()
+                wv.removeAllViews()
+            }
             wv.destroy()
         }
         webView = null

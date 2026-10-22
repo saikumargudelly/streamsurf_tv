@@ -40,6 +40,42 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
         private fun logError(msg: String, tr: Throwable? = null) {
             try { android.util.Log.e(TAG, msg, tr) } catch (_: Throwable) { println("[$TAG] $msg: ${tr?.message}") }
         }
+
+        /**
+         * Identifies media streaming manifests, segment chunks, DRM licenses, and audio/video resources.
+         * Ensures legitimate streaming data (.m3u8, .mpd, .m4s, .ts, .mp4, .webm, .m4a, Widevine)
+         * passes through cleanly without being intercepted or throttled, unless originated from an ad server.
+         */
+        fun isMediaOrStreamingResource(url: String, host: String): Boolean {
+            val lowerUrl = url.lowercase()
+            val lowerHost = host.lowercase()
+
+            // Explicit ad delivery subdomains and paths are never protected
+            if (lowerHost.contains("videoads") ||
+                lowerHost.contains("hesads") ||
+                lowerHost.contains("doubleclick") ||
+                lowerHost.contains("googleads") ||
+                lowerHost.contains("pagead") ||
+                lowerUrl.contains("/ads/vast") ||
+                lowerUrl.contains("/ads/vmap") ||
+                lowerUrl.contains("/pagead/")) {
+                return false
+            }
+
+            return lowerUrl.contains(".m3u8") ||
+                    lowerUrl.contains(".mpd") ||
+                    lowerUrl.contains(".m4s") ||
+                    lowerUrl.contains(".ts") ||
+                    lowerUrl.contains(".mp4") ||
+                    lowerUrl.contains(".webm") ||
+                    lowerUrl.contains(".m4a") ||
+                    lowerUrl.contains("widevine") ||
+                    lowerUrl.contains("license") ||
+                    lowerUrl.contains("googlevideo.com") ||
+                    lowerUrl.contains("nflxvideo.net") ||
+                    lowerHost.contains("akamaized.net") ||
+                    lowerHost.contains("boltdns.net")
+        }
     }
 
     override var isEnabled: Boolean = true
@@ -253,26 +289,8 @@ class FilterListAdBlockingEngine : AdBlockingEngine {
     }
 
     private fun isOttStreamingResource(url: String, host: String, documentUrl: String): Boolean {
-        // Protect DRM licenses and media segments even on streaming platforms
-        val lowerUrl = url.lowercase()
-        val lowerHost = host.lowercase()
-        val isOtt = ContentBlocker.isOttPlatform(documentUrl) || ContentBlocker.isOttPlatform(lowerHost)
-        if (!isOtt) return false
-
-        // Ad delivery subdomains on OTT are blocked
-        if (lowerHost.contains("videoads") || lowerHost.contains("hesads") || lowerUrl.contains("/ads/vast")) {
-            return false
-        }
-
-        return lowerUrl.contains("widevine") ||
-                lowerUrl.contains(".mpd") ||
-                lowerUrl.contains(".m3u8") ||
-                lowerUrl.contains(".mp4") ||
-                lowerUrl.contains(".m4s") ||
-                lowerUrl.contains(".ts") ||
-                lowerUrl.contains("license") ||
-                lowerHost.contains("akamaized.net") ||
-                lowerHost.contains("boltdns.net")
+        // Protect DRM licenses and media segments across all streaming platforms and CDNs
+        return isMediaOrStreamingResource(url, host)
     }
 
     override fun shouldBlockNavigation(url: String?): Boolean {

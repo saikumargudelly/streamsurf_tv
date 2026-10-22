@@ -204,7 +204,8 @@ object SecurityPolicy {
                         return origFetch.apply(this, arguments).then(function(res) {
                             try {
                                 var u = (res.url || '').toLowerCase();
-                                if (u.indexOf('hotstar') !== -1 || u.indexOf('playback') !== -1 || u.indexOf('content') !== -1) {
+                                var isHotstar = u.indexOf('hotstar') !== -1 || (window.location.hostname && window.location.hostname.indexOf('hotstar') !== -1);
+                                if (isHotstar && (u.indexOf('playback') !== -1 || u.indexOf('content') !== -1)) {
                                     var origJson = res.json.bind(res);
                                     res.json = function() {
                                         return origJson().then(function(data) {
@@ -232,26 +233,26 @@ object SecurityPolicy {
                     };
                 }
 
-                // 5. Video Ad Auto-Skipper & Fast-Forward
-                setInterval(function() {
+                // 5. Video Ad Auto-Skipper & Fast-Forward (Targeted for YouTube and video ad containers)
+                if (window.__veyra_ad_interval) {
+                    clearInterval(window.__veyra_ad_interval);
+                }
+                window.__veyra_ad_interval = setInterval(function() {
                     try {
-                        var skipBtn = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern, .videoAdUiSkipButton, button[class*="skip"], button[id*="skip"], [aria-label*="Skip"], div[class*="skip-button"], .ad-skip-button');
+                        var skipBtn = document.querySelector('.ytp-ad-skip-button, .ytp-ad-skip-button-modern, .videoAdUiSkipButton, .ytp-ad-skip-button-slot');
                         if (skipBtn) {
                             skipBtn.click();
                         }
-                        var adContainer = document.querySelector('.ad-showing, .ad-interrupting, .video-ads, [class*="ad-container"]');
-                        if (adContainer) {
-                            var vids = document.querySelectorAll('video');
-                            for (var i = 0; i < vids.length; i++) {
-                                var v = vids[i];
-                                if (v && v.duration && v.duration < 120 && !v.paused) {
-                                    v.currentTime = v.duration;
-                                    v.playbackRate = 16.0;
-                                }
+                        var ytpPlayer = document.querySelector('.html5-video-player.ad-showing, .html5-video-player.ad-interrupting');
+                        if (ytpPlayer) {
+                            var v = ytpPlayer.querySelector('video');
+                            if (v && v.duration && v.duration < 120 && !v.paused) {
+                                v.currentTime = v.duration;
+                                v.playbackRate = 16.0;
                             }
                         }
                     } catch (e) {}
-                }, 250);
+                }, 1000);
 
                 // 6. Anti-Popup & Clickjack Neutralization
                 var origOpen = window.open;

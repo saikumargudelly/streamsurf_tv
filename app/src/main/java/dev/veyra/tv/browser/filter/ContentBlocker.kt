@@ -410,6 +410,10 @@ object ContentBlocker : AdBlockingEngine {
      */
     fun isRedirectOrPopupUrl(url: String?): Boolean {
         if (!isEnabled || url.isNullOrBlank()) return false
+        val host = extractHostFromUrl(url) ?: ""
+        if (FilterListAdBlockingEngine.isMediaOrStreamingResource(url, host)) {
+            return false
+        }
         val lower = url.lowercase()
 
         // 1. Check known ad redirect / popunder paths & query params
@@ -435,8 +439,7 @@ object ContentBlocker : AdBlockingEngine {
         }
 
         // 2. Check destination hostname against blocked ad/tracker domains
-        val host = extractHostFromUrl(url)
-        if (host != null && isBlocked(host)) {
+        if (host.isNotEmpty() && isBlocked(host)) {
             return true
         }
 

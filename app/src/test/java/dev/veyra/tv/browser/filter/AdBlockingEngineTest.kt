@@ -134,6 +134,20 @@ class AdBlockingEngineTest {
     }
 
     @Test
+    fun testGenericStreamingMediaImmunity() {
+        // Generic web video platforms, CDNs, and anime/movie streaming media chunks must NOT be blocked
+        assertNull(engine.shouldInterceptUrl("https://cdn.streamhub.to/hls/1080p/index.m3u8", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://delivery.vidbox.pro/segments/chunk_0042.ts", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://video-edge.fastcdn.net/hls/segment.m4s", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://storage.stream.org/movie/1311031.mp4", "https://cinehd.vc"))
+        assertNull(engine.shouldInterceptUrl("https://license.drmtoday.com/widevine/license", "https://cinehd.vc"))
+
+        // Video ads on generic platforms must still be intercepted
+        assertNotNull(engine.shouldInterceptUrl("https://pagead2.googlesyndication.com/pagead/ads?client=ca-pub-123", "https://cinehd.vc"))
+        assertNotNull(engine.shouldInterceptUrl("https://securepubads.g.doubleclick.net/gampad/ads?env=vp", "https://cinehd.vc"))
+    }
+
+    @Test
     fun testCosmeticHidingCssGeneration() {
         val css = engine.getCosmeticCss("https://example.com")
         assertNotNull(css)

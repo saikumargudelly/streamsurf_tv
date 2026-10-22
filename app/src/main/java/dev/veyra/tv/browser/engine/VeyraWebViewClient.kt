@@ -98,24 +98,19 @@ class VeyraWebViewClient(
     ): WebResourceResponse? {
         try {
             if (request != null && !request.isForMainFrame) {
+                val url = request.url?.toString() ?: ""
+                val requestHost = request.url?.host?.lowercase() ?: ""
+
+                // For legitimate streaming subresources (DRM licenses, media manifests .m3u8/.mpd, video segments .mp4/.m4s/.ts),
+                // pass through cleanly
+                if (dev.veyra.tv.browser.filter.FilterListAdBlockingEngine.isMediaOrStreamingResource(url, requestHost)) {
+                    return super.shouldInterceptRequest(view, request)
+                }
+
                 // Intercept network ads, tracking requests, and video ad tags using filter engine
                 val blockedResponse = ContentBlocker.shouldIntercept(view, request, currentMainUrl)
                 if (blockedResponse != null) {
                     return blockedResponse
-                }
-
-                // For legitimate streaming subresources (DRM licenses, media manifests .m3u8/.mpd, video segments .mp4/.m4s/.ts),
-                // pass through cleanly
-                val requestHost = request.url?.host?.lowercase() ?: ""
-                val mainUrl = currentMainUrl ?: ""
-                val mainHost = if (mainUrl.isNotBlank()) {
-                    ContentBlocker.extractHostFromUrl(mainUrl) ?: ""
-                } else ""
-                val referer = request.requestHeaders?.get("Referer")?.lowercase() ?: ""
-                val origin = request.requestHeaders?.get("Origin")?.lowercase() ?: ""
-
-                if (isOttPlatform(mainHost) || isOttPlatform(requestHost) || isOttPlatform(referer) || isOttPlatform(origin)) {
-                    return super.shouldInterceptRequest(view, request)
                 }
             }
         } catch (_: Throwable) {
@@ -128,19 +123,14 @@ class VeyraWebViewClient(
     override fun shouldInterceptRequest(view: WebView?, url: String?): WebResourceResponse? {
         try {
             if (url != null) {
+                val host = ContentBlocker.extractHostFromUrl(url) ?: ""
+                if (dev.veyra.tv.browser.filter.FilterListAdBlockingEngine.isMediaOrStreamingResource(url, host)) {
+                    return super.shouldInterceptRequest(view, url)
+                }
+
                 val blockedResponse = ContentBlocker.shouldInterceptUrl(url, currentMainUrl)
                 if (blockedResponse != null) {
                     return blockedResponse
-                }
-
-                val host = ContentBlocker.extractHostFromUrl(url) ?: ""
-                val mainUrl = currentMainUrl ?: ""
-                val mainHost = if (mainUrl.isNotBlank()) {
-                    ContentBlocker.extractHostFromUrl(mainUrl) ?: ""
-                } else ""
-
-                if (isOttPlatform(mainHost) || isOttPlatform(host)) {
-                    return super.shouldInterceptRequest(view, url)
                 }
             }
         } catch (_: Throwable) {

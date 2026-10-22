@@ -145,7 +145,10 @@ class MainActivity : AppCompatActivity() {
             },
             onRendererCrashCallback = { didCrash ->
                 Toast.makeText(this, getString(R.string.renderer_crashed_message), Toast.LENGTH_LONG).show()
-                controller.recoverRenderer(webViewClient, webChromeClient)
+                controller.recoverRenderer(webViewClient, webChromeClient) {
+                    showHomeScreen()
+                    Toast.makeText(this, "Page stopped responding due to system memory or decoder limits.", Toast.LENGTH_LONG).show()
+                }
             }
         )
 

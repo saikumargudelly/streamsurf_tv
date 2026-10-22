@@ -1,112 +1,92 @@
-# Veyra TV: Lightweight, Privacy-First Android TV Browser
+# Veyra TV
 
-Veyra is an original, lightweight web browser built from scratch specifically for **Android TV** and **Google TV** devices. Distributed as a self-contained signed APK for sideloading, Veyra is designed with a strict remote-first interface, low memory footprint, persistent OTT sessions, and robust privacy defaults.
+> Fast, private, remote-first web browser engineered from the ground up for Android TV and Google TV.
 
----
+[![Platform](https://img.shields.io/badge/Platform-Android%20TV%20%7C%20Google%20TV-blue?logo=android)](https://github.com/saikumargudelly/streamsuf_tv)
+[![Android](https://img.shields.io/badge/Android-8.0%2B%20%28API%2026%2B%29-3DDC84?logo=android)](https://github.com/saikumargudelly/streamsuf_tv)
+[![Language](https://img.shields.io/badge/Kotlin-1.9.22-7F52FF?logo=kotlin)](https://kotlinlang.org/)
+[![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
+[![Architecture](https://img.shields.io/badge/Architecture-Single--WebView%20%7C%20Low--RAM-orange)](https://github.com/saikumargudelly/streamsuf_tv)
 
-## Key Features (Milestone 1)
-
-- **Remote-First Android TV Interface**: Optimized for 1080p and 4K displays with prominent high-contrast D-pad focus indicators and safe overscan margins (inspired by best practices from TV applications like SmartTube).
-- **Single Active WebView Architecture**: Minimizes memory usage on RAM-constrained TV hardware, avoiding multiple background WebViews.
-- **Persistent OTT Sessions**: Preserves authentication cookies and DOM storage across app restarts for services like Netflix, YouTube, Prime Video, and JioHotstar without storing credentials.
-- **Fullscreen HTML5 Video**: Native `WebChromeClient` custom view integration with automatic full-screen display and remote control exit handling.
-- **Strict TLS & Security Defaults**: Hardened WebView configuration with mandatory TLS certificate validation (no auto-bypass), disabled local file access, and blocked mixed content.
-- **Renderer Crash Recovery**: Resilient `onRenderProcessGone` handler to recover cleanly without crashing the browser when Android terminates the renderer process under memory pressure.
-- **Dual Launcher Support**: Native Leanback launcher banner and standard mobile launcher support for broad compatibility across TV and emulation environments.
-
----
-
-## Requirements & Environment
-
-- **Operating System**: macOS / Linux / Windows
-- **JDK**: OpenJDK 17 or OpenJDK 21
-- **Android SDK**: API Level 35 (Android 15) build tools, minimum API Level 26 (Android 8.0 Oreo)
-- **Target Platform**: Android TV / Google TV / Android devices
-
----
-
-## Build Instructions
-
-1. Clone or navigate to the repository directory:
-   ```bash
-   cd "veyra TV"
-   ```
-
-2. Ensure `local.properties` specifies your Android SDK directory:
-   ```properties
-   sdk.dir=/Users/saikumargudelly/Library/Android/sdk
-   ```
-
-3. Build the debug APK:
-   ```bash
-   export JAVA_HOME=/opt/homebrew/opt/openjdk@17/libexec/openjdk.jdk/Contents/Home
-   ./gradlew assembleDebug
-   ```
-
-4. Output APK location:
-   ```
-   app/build/outputs/apk/debug/app-debug.apk
-   ```
-
----
-
-## Running Unit Tests
-
-Execute the unit test suite:
-```bash
-./gradlew test
+```
+Topics: android-tv, google-tv, tv-browser, privacy-browser, adblocker, nextdns, dns-over-https, leanback, smart-tv, kotlin
 ```
 
 ---
 
-## Installation & Sideloading onto Android TV
+## Overview
 
-1. Enable **Developer Options** and **USB / Network Debugging** on your Android TV:
-   - Go to **Settings > Device Preferences > About**.
-   - Tap **Build** 7 times to enable Developer Options.
-   - Go to **Settings > Developer Options > Network Debugging** and enable it.
+**Veyra TV** is an original Android TV browser crafted specifically for television hardware and remote controls. Unlike desktop or mobile ports, Veyra combines a clean 10-foot UI with a built-in content blocker, custom DNS-over-HTTPS (NextDNS), smart video streaming immunity, virtual cursor navigation, and crash-resilient memory management.
 
-2. Connect to your TV via ADB over Wi-Fi:
-   ```bash
-   adb connect <TV-IP-ADDRESS>:5555
-   ```
+---
 
-3. Install the APK:
-   ```bash
-   adb install -r app/build/outputs/apk/debug/app-debug.apk
-   ```
+## Key Highlights
 
-4. Launch Veyra on the TV:
-   ```bash
-   adb shell am start -n dev.veyra.tv.browser.debug/dev.veyra.tv.browser.ui.MainActivity
-   ```
+- 🛡️ **Veyra Shield Ad-Blocker**  
+  Network-level ad/tracker interception with EasyList rule parsing, cosmetic CSS element hiding, anti-popup/clickjack neutralization, and intelligent video ad auto-skipping.
+- 🌐 **Private DNS & Custom NextDNS**  
+  Native DNS-over-HTTPS (DoH) engine with full manual **NextDNS profile ID** configuration, plus instant presets for NextDNS, Cloudflare, AdGuard, and Quad9.
+- 🎯 **Remote-First TV UX & Virtual Mouse**  
+  Fluid D-pad navigation with high-contrast focus rings, overscan-safe layout, TV status badges, and an integrated **Virtual Mouse Pointer Mode** toggled with a single remote press for desktop websites.
+- 🎬 **Zero-Stall Streaming Media Engine**  
+  Smart media immunity ensures streaming manifests and video segments (`.m3u8`, `.mpd`, `.ts`, `.m4s`, `.mp4`) bypass false-positive ad rules for smooth 4K/1080p playback.
+- 📱 **Quick TV Sign-In Hub**  
+  One-click code sign-in launchpads for YouTube TV, Prime Video, Disney+ Begin, Hotstar QR, and Netflix TV.
+- 🪶 **Low-RAM Architecture & Crash Resiliency**  
+  Single-active-WebView design keeping host memory under ~130 MB PSS. Compliant Android WebView dead-process handling and rate-limited renderer recovery eliminate crash loops and system LMK kills.
+- 🔒 **Zero Telemetry & Local Session Persistence**  
+  No telemetry, analytics, or cloud backends. Streaming logins and cookies persist locally across reboots with strict TLS certificate validation.
 
 ---
 
 ## Remote Control Guide
 
-| Remote Key | Function |
+| Key | Navigation Function |
 |---|---|
-| **D-Pad Directional (Up/Down/Left/Right)** | Move focus between tiles, URL input, and web page elements |
-| **OK / Center Button** | Select focused tile, submit URL search, click links, play/pause video |
-| **BACK** | 1. Exit fullscreen video (if playing)<br>2. Navigate back in page history<br>3. Return to TV Home screen<br>4. Exit application |
-| **MENU** | Jump focus directly to the top navigation toolbar |
+| **D-Pad (Up / Down / Left / Right)** | Moves focus across tiles, omnibar, and web page links (or moves cursor in Pointer mode) |
+| **OK / Center** | Clicks focused element, enters video fullscreen, or clicks under virtual cursor |
+| **BACK** | 1. Closes modals / Exits fullscreen video<br>2. Navigates back in page history<br>3. Returns to Veyra TV Home screen |
+| **MENU / F2** | Jumps focus instantly to the top navigation toolbar |
 
 ---
 
-## Performance Benchmark Procedure
+## Build from Source
 
-Run the automated performance measurement script:
+### Prerequisites
+- JDK 17 (`export JAVA_HOME=...`)
+- Android SDK (API 34/35 platform tools)
+
+### Commands
 ```bash
-./scripts/measure_performance.sh
+# Clone the repository
+git clone https://github.com/saikumargudelly/streamsuf_tv.git
+cd streamsuf_tv
+
+# Run unit tests
+./gradlew test
+
+# Build signed release APK
+./gradlew assembleRelease copyReleaseApkToDist
 ```
-This measures:
-- Output APK package size (Target: < 15 MB)
-- Cold startup latency via `am start -W` (Target: < 3000 ms)
-- Idle application PSS memory via `dumpsys meminfo` (Target: < 40 MB)
+The compiled APK will be output to `dist/veyra-tv-release.apk`.
 
 ---
 
-## License & Third-Party Notices
+## Sideloading onto Android TV
 
-Developed independently without proprietary external dependencies or cloud backends. Utilizes Google AndroidX libraries under the Apache 2.0 license.
+```bash
+# 1. Connect to Android TV via ADB
+adb connect <TV-IP-ADDRESS>:5555
+
+# 2. Install release APK
+adb install -r dist/veyra-tv-release.apk
+
+# 3. Launch Veyra TV
+adb shell am start -n dev.veyra.tv.browser/dev.veyra.tv.browser.ui.MainActivity
+```
+
+---
+
+## License
+
+Released under the [Apache License 2.0](LICENSE). Built purely with native AndroidX and Kotlin without proprietary tracking frameworks or third-party cloud SDKs.
