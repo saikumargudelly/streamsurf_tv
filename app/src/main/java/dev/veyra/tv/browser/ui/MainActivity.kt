@@ -206,122 +206,108 @@ class MainActivity : AppCompatActivity() {
             binding.inputUrlOrSearch.requestFocus()
         }
 
-        // Home Shield Pill Action: Quick toggle ad & tracker blocker
-        binding.btnHomeShield.setOnClickListener {
-            val enabled = !ContentBlocker.isEnabled
-            ContentBlocker.isEnabled = enabled
-            BrowserPreferences.setContentBlockerEnabled(this, enabled)
-            updateShieldStatusUI(enabled)
-            val msg = if (enabled) "Ad & Tracker Shield: ACTIVE (Blocking ads, popups & trackers)" else "Ad & Tracker Shield: PAUSED"
+        // Top Bar Action Buttons
+        binding.btnTopShield.setOnClickListener {
+            toggleShield()
+        }
+
+        binding.btnTopTheme.setOnClickListener {
+            Toast.makeText(this, "StreamSurf TV Obsidian Theme active", Toast.LENGTH_SHORT).show()
+        }
+
+        // Hero Continue Card: Resume & Open new tab
+        binding.btnHeroResume.setOnClickListener {
+            loadWebPage("https://www.youtube.com/tv")
+        }
+        binding.btnHeroNewTab.setOnClickListener {
+            binding.inputUrlOrSearch.requestFocus()
+        }
+
+        // 2x2 Quick Control Grid
+        binding.btnTileShield.setOnClickListener {
+            toggleShield()
+        }
+
+        binding.btnTilePointer.setOnClickListener {
+            val active = pointerController.togglePointerMode()
+            updatePointerStatusUI(active)
+            val msg = if (active) "TV Virtual Pointer: ON" else "TV Virtual Pointer: OFF"
             Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
         }
 
-        // Home NextDNS Pill Action: Open manual NextDNS configuration dialog
-        binding.btnHomeNextDns.setOnClickListener {
+        binding.btnTileDns.setOnClickListener {
             showNextDnsDialog()
         }
 
-        // Home Bookmarks Pill Action: Jump to saved bookmarks row or open bookmarks dialog
-        binding.btnHomeBookmarks.setOnClickListener {
-            val bookmarks = BrowserPreferences.getBookmarks(this)
-            if (bookmarks.isNotEmpty() && binding.containerBookmarks.childCount > 0) {
-                binding.homeContainer.smoothScrollTo(0, binding.sectionBookmarksHeader.top - 20)
-                binding.containerBookmarks.getChildAt(0)?.requestFocus()
-            } else {
-                showBookmarksDialog()
-            }
-        }
-
-        // Home Phone Sign-In Pill Action: TV QR & Activation Codes
-        binding.btnHomeQrLogin.setOnClickListener {
+        binding.btnTileSignInCode.setOnClickListener {
             handleQrLoginAction()
         }
 
-        // Section 1: Easy TV Sign-In (Scan QR / Phone Activation Code)
-        binding.tileTvYoutube.setOnClickListener { loadWebPage("https://www.youtube.com/tv") }
-        binding.tileTvPrime.setOnClickListener { loadWebPage("https://www.primevideo.com/mytv") }
-        binding.tileTvHotstar.setOnClickListener { loadWebPage("https://www.hotstar.com/in/subscribe/sign-in") }
-        binding.tileTvDisney.setOnClickListener { loadWebPage("https://www.disneyplus.com/begin") }
-        binding.tileTvNetflix.setOnClickListener { loadWebPage("https://www.netflix.com/tv8") }
-
-        // Section 2: Full Desktop Web Streaming Apps
+        // Streaming Shelf Apps
         binding.tileYoutube.setOnClickListener { loadWebPage("https://www.youtube.com") }
-        binding.tileNetflix.setOnClickListener { loadWebPage("https://www.netflix.com") }
         binding.tilePrime.setOnClickListener { loadWebPage("https://www.primevideo.com") }
-        binding.tileDisney.setOnClickListener { loadWebPage("https://www.disneyplus.com") }
         binding.tileHotstar.setOnClickListener { loadWebPage("https://www.hotstar.com") }
-        binding.tileApple.setOnClickListener { loadWebPage("https://tv.apple.com") }
-        binding.tileMax.setOnClickListener { loadWebPage("https://www.max.com") }
+        binding.tileNetflix.setOnClickListener { loadWebPage("https://www.netflix.com") }
+        binding.tileDisney.setOnClickListener { loadWebPage("https://www.disneyplus.com") }
+        binding.tileAddShortcut.setOnClickListener { showBookmarksDialog() }
 
-        // Section 3: Media, Anime & Search
-        binding.tileHulu.setOnClickListener { loadWebPage("https://www.hulu.com") }
-        binding.tileSpotify.setOnClickListener { loadWebPage("https://open.spotify.com") }
-        binding.tileTwitch.setOnClickListener { loadWebPage("https://www.twitch.tv") }
-        binding.tileCrunchyroll.setOnClickListener { loadWebPage("https://www.crunchyroll.com") }
-        binding.tileJioCinema.setOnClickListener { loadWebPage("https://www.jiocinema.com") }
-        binding.tilePeacock.setOnClickListener { loadWebPage("https://www.peacocktv.com") }
-        binding.tileDuckDuckGo.setOnClickListener { loadWebPage("https://duckduckgo.com") }
+        // Recent and Pinned Shelf Websites
+        binding.tileRecentWiki.setOnClickListener { loadWebPage("https://www.wikipedia.org") }
+        binding.tileRecentHN.setOnClickListener { loadWebPage("https://news.ycombinator.com") }
+        binding.tileRecentGithub.setOnClickListener { loadWebPage("https://github.com") }
+        binding.tileRecentCricbuzz.setOnClickListener { loadWebPage("https://www.cricbuzz.com") }
+        binding.tileRecentBbc.setOnClickListener { loadWebPage("https://www.bbc.com/news") }
+        binding.tileRecentEspn.setOnClickListener { loadWebPage("https://www.espn.com") }
 
-        // Attach SmartTube Leanback GPU-Accelerated Focus Motion to All Shelves & Elements
-        val qrTiles = listOf(
-            binding.tileTvYoutube,
-            binding.tileTvPrime,
-            binding.tileTvHotstar,
-            binding.tileTvDisney,
-            binding.tileTvNetflix
-        )
-        qrTiles.forEach { tile ->
-            TvMotionHelper.attachTvFocusAnimation(
-                tile,
-                parentHorizontalScroll = binding.scrollShelfQr,
-                parentVerticalScroll = binding.homeContainer
-            )
-        }
-
-        val desktopTiles = listOf(
+        // Attach SmartTube GPU-Accelerated Focus Motion to All Shelves & Elements
+        val streamingTiles = listOf(
             binding.tileYoutube,
-            binding.tileNetflix,
             binding.tilePrime,
-            binding.tileDisney,
             binding.tileHotstar,
-            binding.tileApple,
-            binding.tileMax
+            binding.tileNetflix,
+            binding.tileDisney,
+            binding.tileAddShortcut
         )
-        desktopTiles.forEach { tile ->
+        streamingTiles.forEach { tile ->
             TvMotionHelper.attachTvFocusAnimation(
                 tile,
-                parentHorizontalScroll = binding.scrollShelf1,
+                parentHorizontalScroll = binding.scrollShelfStreaming,
                 parentVerticalScroll = binding.homeContainer
             )
         }
 
-        val mediaTiles = listOf(
-            binding.tileHulu,
-            binding.tileSpotify,
-            binding.tileTwitch,
-            binding.tileCrunchyroll,
-            binding.tileJioCinema,
-            binding.tilePeacock,
-            binding.tileDuckDuckGo
+        val recentTiles = listOf(
+            binding.tileRecentWiki,
+            binding.tileRecentHN,
+            binding.tileRecentGithub,
+            binding.tileRecentCricbuzz,
+            binding.tileRecentBbc,
+            binding.tileRecentEspn
         )
-        mediaTiles.forEach { tile ->
+        recentTiles.forEach { tile ->
             TvMotionHelper.attachTvFocusAnimation(
                 tile,
-                parentHorizontalScroll = binding.scrollShelf2,
+                parentHorizontalScroll = binding.scrollShelfRecent,
                 parentVerticalScroll = binding.homeContainer
             )
         }
 
-        // Attach focus motion to Header Action Pills & Omnibar buttons
-        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeShield, scaleFactor = 1.05f)
-        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeNextDns, scaleFactor = 1.05f)
-        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeBookmarks, scaleFactor = 1.05f)
-        TvMotionHelper.attachTvFocusAnimation(binding.btnHomeQrLogin, scaleFactor = 1.05f)
-        TvMotionHelper.attachTvFocusAnimation(binding.btnGo, scaleFactor = 1.05f)
+        // Attach focus motion to Hero Card, Control Grid, and Header elements
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHeroResume, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnHeroNewTab, scaleFactor = 1.05f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTileShield, scaleFactor = 1.04f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTilePointer, scaleFactor = 1.04f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTileDns, scaleFactor = 1.04f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTileSignInCode, scaleFactor = 1.04f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTopShield, scaleFactor = 1.08f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnTopTheme, scaleFactor = 1.08f)
+        TvMotionHelper.attachTvFocusAnimation(binding.btnGo, scaleFactor = 1.08f)
         TvMotionHelper.attachTvFocusAnimation(binding.btnClearSearch, scaleFactor = 1.08f)
         TvMotionHelper.attachTvFocusAnimation(binding.searchBarLayout, scaleFactor = 1.02f)
+
         updateShieldStatusUI(ContentBlocker.isEnabled)
         updateNextDnsStatusUI()
+        updatePointerStatusUI(pointerController.isPointerModeActive)
         refreshBookmarksShelf()
         binding.inputUrlOrSearch.post {
             binding.inputUrlOrSearch.requestFocus()
@@ -354,7 +340,7 @@ class MainActivity : AppCompatActivity() {
 
         binding.btnNavPointer.setOnClickListener {
             val active = pointerController.togglePointerMode()
-            binding.btnNavPointer.isSelected = active
+            updatePointerStatusUI(active)
             val message = if (active) {
                 "Virtual Pointer: ON (Move with D-pad, OK to click anywhere)"
             } else {
@@ -752,8 +738,8 @@ class MainActivity : AppCompatActivity() {
             binding.sectionBookmarksHeader.visibility = View.GONE
             binding.scrollShelfBookmarks.visibility = View.GONE
             binding.containerBookmarks.removeAllViews()
-            binding.inputUrlOrSearch.nextFocusDownId = R.id.tileTvYoutube
-            binding.btnGo.nextFocusDownId = R.id.tileTvYoutube
+            binding.inputUrlOrSearch.nextFocusDownId = R.id.btnHeroResume
+            binding.btnGo.nextFocusDownId = R.id.btnHeroResume
             return
         }
 
@@ -791,17 +777,46 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
+    private fun toggleShield() {
+        val enabled = !ContentBlocker.isEnabled
+        ContentBlocker.isEnabled = enabled
+        BrowserPreferences.setContentBlockerEnabled(this, enabled)
+        updateShieldStatusUI(enabled)
+        val msg = if (enabled) "Ad & Tracker Shield: ACTIVE (Blocking ads, popups & trackers)" else "Ad & Tracker Shield: PAUSED"
+        Toast.makeText(this, msg, Toast.LENGTH_SHORT).show()
+    }
+
+    private fun updatePointerStatusUI(active: Boolean) {
+        binding.btnNavPointer.isSelected = active
+        binding.btnTilePointer.isSelected = active
+        binding.tvTilePointerStatus.text = if (active) "ON" else "OFF"
+        if (active) {
+            binding.tvTilePointerStatus.setTextColor(ContextCompat.getColor(this, R.color.accent_primary))
+            binding.imgTilePointerIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnNavPointer.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+        } else {
+            binding.tvTilePointerStatus.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+            binding.imgTilePointerIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnNavPointer.imageTintList = ContextCompat.getColorStateList(this, R.color.text_primary)
+        }
+    }
+
     private fun updateShieldStatusUI(enabled: Boolean) {
         binding.btnNavShield.isSelected = enabled
-        binding.btnHomeShield.isSelected = enabled
+        binding.btnTopShield.isSelected = enabled
+        binding.btnTileShield.isSelected = enabled
         if (enabled) {
-            binding.tvHomeShieldStatus.text = getString(R.string.home_shield_active)
-            binding.imgHomeShieldDot.setImageResource(R.drawable.ic_status_dot_green)
-            binding.imgHomeShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.tvTileShieldStatus.text = "ON"
+            binding.tvTileShieldStatus.setTextColor(ContextCompat.getColor(this, R.color.accent_primary))
+            binding.imgTileShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnTopShield.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.btnNavShield.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
         } else {
-            binding.tvHomeShieldStatus.text = getString(R.string.home_shield_off)
-            binding.imgHomeShieldDot.setImageResource(R.drawable.ic_status_dot_red)
-            binding.imgHomeShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
+            binding.tvTileShieldStatus.text = "OFF"
+            binding.tvTileShieldStatus.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+            binding.imgTileShieldIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
+            binding.btnTopShield.imageTintList = ContextCompat.getColorStateList(this, R.color.text_secondary)
+            binding.btnNavShield.imageTintList = ContextCompat.getColorStateList(this, R.color.text_primary)
         }
     }
 
@@ -811,22 +826,22 @@ class MainActivity : AppCompatActivity() {
         val profileId = NextDnsConfig.extractProfileId(input)
 
         binding.btnNavNextDns.isSelected = enabled
-        binding.btnHomeNextDns.isSelected = enabled
+        binding.btnTileDns.isSelected = enabled
 
         if (enabled && profileId.isNotEmpty()) {
-            binding.tvHomeNextDnsStatus.text = "NextDNS ($profileId)"
-            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_green)
-            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.tvTileDnsStatus.text = profileId
+            binding.tvTileDnsStatus.setTextColor(ContextCompat.getColor(this, R.color.accent_primary))
+            binding.imgTileDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
             binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
         } else if (enabled) {
-            binding.tvHomeNextDnsStatus.text = "NextDNS (On)"
-            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_green)
-            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
+            binding.tvTileDnsStatus.text = "ON"
+            binding.tvTileDnsStatus.setTextColor(ContextCompat.getColor(this, R.color.accent_primary))
+            binding.imgTileDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
             binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.accent_primary)
         } else {
-            binding.tvHomeNextDnsStatus.text = "NextDNS (Off)"
-            binding.imgHomeNextDnsDot.setImageResource(R.drawable.ic_status_dot_red)
-            binding.imgHomeNextDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
+            binding.tvTileDnsStatus.text = "OFF"
+            binding.tvTileDnsStatus.setTextColor(ContextCompat.getColor(this, R.color.text_secondary))
+            binding.imgTileDnsIcon.imageTintList = ContextCompat.getColorStateList(this, R.color.text_muted)
             binding.btnNavNextDns.imageTintList = ContextCompat.getColorStateList(this, R.color.text_primary)
         }
     }

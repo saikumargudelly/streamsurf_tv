@@ -1,29 +1,33 @@
+<?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <!-- Backgrounds: Deep, premium obsidian and dark graphite -->
-    <color name="bg_dark">#08090D</color>
-    <color name="bg_surface">#12151D</color>
-    <color name="bg_surface_elevated">#1A1E29</color>
-    <color name="bg_surface_glass">#D912151D</color>
-    <color name="bg_pill">#161A24</color>
-    <color name="bg_pill_focused">#222838</color>
+    <!-- Backgrounds: Deep black and dark obsidian -->
+    <color name="bg_dark">#080C0E</color>
+    <color name="bg_surface">#10161D</color>
+    <color name="bg_surface_elevated">#17202A</color>
+    <color name="bg_surface_glass">#E610161D</color>
+    <color name="bg_pill">#141C24</color>
+    <color name="bg_pill_focused">#1F2B38</color>
 
-    <!-- Refined, professional accents -->
-    <color name="accent_primary">#3B82F6</color>
-    <color name="accent_secondary">#2563EB</color>
-    <color name="accent_glow">#203B82F6</color>
-    <color name="accent_green">#10B981</color>
-    <color name="accent_green_glow">#2010B981</color>
-    <color name="badge_tv_bg">#181E2C</color>
+    <!-- Signatures: Mint Turquoise & Coral from Reference Design -->
+    <color name="accent_primary">#2DE0A5</color>
+    <color name="accent_secondary">#1EC28D</color>
+    <color name="accent_glow">#332DE0A5</color>
+    <color name="accent_green">#2DE0A5</color>
+    <color name="accent_green_glow">#332DE0A5</color>
+    <color name="accent_coral">#FF6B6B</color>
+    <color name="accent_coral_glow">#33FF6B6B</color>
+    <color name="badge_tv_bg">#141C24</color>
 
-    <!-- TV Focus Ring: Crisp White for 10-foot TV viewing -->
-    <color name="focus_ring">#FFFFFF</color>
+    <!-- TV Focus Ring: Crisp Mint & Coral for 10-foot TV viewing -->
+    <color name="focus_ring">#2DE0A5</color>
+    <color name="focus_ring_coral">#FF6B6B</color>
     <color name="star_gold">#F59E0B</color>
 
     <!-- Neutral Typography Hierarchy -->
-    <color name="text_primary">#F8FAFC</color>
-    <color name="text_secondary">#94A3B8</color>
-    <color name="text_muted">#64748B</color>
-    <color name="divider">#1A1F2C</color>
-    <color name="divider_light">#262D3D</color>
+    <color name="text_primary">#FFFFFF</color>
+    <color name="text_secondary">#8E9CA8</color>
+    <color name="text_muted">#5A6875</color>
+    <color name="divider">#1A242E</color>
+    <color name="divider_light">#24323F</color>
     <color name="danger">#EF4444</color>
 </resources>

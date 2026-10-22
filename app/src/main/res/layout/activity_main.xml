@@ -6,7 +6,7 @@
     android:layout_height="match_parent"
     android:background="@color/bg_dark">
 
-    <!-- 1. HOME SCREEN CONTAINER (TV Launcher View with Smooth Vertical Scroll) -->
+    <!-- 1. HOME SCREEN CONTAINER (Reference Layout with Obsidian Theme) -->
     <ScrollView
         android:id="@+id/homeContainer"
         android:layout_width="match_parent"
@@ -23,381 +23,1141 @@
             android:orientation="vertical"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingStart="48dp"
-            android:paddingTop="28dp"
-            android:paddingEnd="48dp"
+            android:paddingStart="44dp"
+            android:paddingTop="26dp"
+            android:paddingEnd="44dp"
             android:paddingBottom="36dp">
 
-            <!-- Modern TV Home Header Bar -->
+            <!-- 1. Top Navigation Bar: Brand Mark + Wide Capsule Search + Action Circles + Live Clock -->
             <LinearLayout
-                android:id="@+id/homeHeaderCard"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:background="@drawable/bg_header_card"
-                android:orientation="vertical"
+                android:layout_height="46dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
                 android:clipChildren="false"
-                android:clipToPadding="false"
-                android:paddingStart="24dp"
-                android:paddingTop="20dp"
-                android:paddingEnd="24dp"
-                android:paddingBottom="20dp">
+                android:clipToPadding="false">
 
-                <!-- Top Row: Brand & Logo (Left) + Quick Actions & Clock (Right) -->
+                <!-- Left: StreamSurf Brand Mark & Title -->
                 <LinearLayout
-                    android:layout_width="match_parent"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal">
+
+                    <ImageView
+                        android:layout_width="32dp"
+                        android:layout_height="32dp"
+                        android:src="@drawable/ic_streamsurf_mark"
+                        tools:ignore="ContentDescription" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="10dp"
+                        android:text="StreamSurf"
+                        android:textColor="@color/text_primary"
+                        android:textSize="18sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-black" />
+                </LinearLayout>
+
+                <!-- Center: Wide Capsule Search Bar with Search Icon -->
+                <LinearLayout
+                    android:id="@+id/searchBarLayout"
+                    android:layout_width="0dp"
+                    android:layout_height="44dp"
+                    android:layout_marginStart="28dp"
+                    android:layout_marginEnd="20dp"
+                    android:layout_weight="1"
+                    android:background="@drawable/bg_search_capsule_bar"
+                    android:focusable="false"
+                    android:gravity="center_vertical"
+                    android:orientation="horizontal"
+                    android:paddingStart="16dp"
+                    android:paddingEnd="12dp">
+
+                    <ImageView
+                        android:layout_width="18dp"
+                        android:layout_height="18dp"
+                        android:src="@drawable/ic_ref_search"
+                        tools:ignore="ContentDescription" />
+
+                    <EditText
+                        android:id="@+id/inputUrlOrSearch"
+                        android:layout_width="0dp"
+                        android:layout_height="match_parent"
+                        android:layout_marginStart="10dp"
+                        android:layout_marginEnd="6dp"
+                        android:layout_weight="1"
+                        android:background="@null"
+                        android:hint="@string/search_hint"
+                        android:imeOptions="actionGo"
+                        android:inputType="textUri"
+                        android:singleLine="true"
+                        android:textColor="@color/text_primary"
+                        android:textColorHint="@color/text_secondary"
+                        android:textSize="14sp"
+                        android:focusable="true"
+                        android:nextFocusDown="@+id/btnHeroResume"
+                        android:nextFocusRight="@+id/btnClearSearch" />
+
+                    <ImageView
+                        android:id="@+id/btnClearSearch"
+                        android:layout_width="26dp"
+                        android:layout_height="26dp"
+                        android:background="@drawable/bg_circle_icon_button"
+                        android:focusable="true"
+                        android:padding="5dp"
+                        android:src="@drawable/ic_clear"
+                        android:visibility="gone"
+                        android:nextFocusLeft="@+id/inputUrlOrSearch"
+                        android:nextFocusRight="@+id/btnGo"
+                        android:nextFocusDown="@+id/btnHeroResume"
+                        tools:ignore="ContentDescription" />
+
+                    <ImageView
+                        android:id="@+id/btnGo"
+                        android:layout_width="28dp"
+                        android:layout_height="28dp"
+                        android:layout_marginStart="4dp"
+                        android:background="@drawable/bg_circle_icon_button"
+                        android:contentDescription="@string/btn_go"
+                        android:focusable="true"
+                        android:padding="6dp"
+                        android:src="@drawable/ic_surf_arrow"
+                        android:nextFocusLeft="@+id/inputUrlOrSearch"
+                        android:nextFocusRight="@+id/btnTopShield"
+                        android:nextFocusDown="@+id/btnHeroResume"
+                        tools:ignore="ContentDescription" />
+                </LinearLayout>
+
+                <!-- Right: Circular Action Buttons & Clock -->
+                <LinearLayout
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center_vertical"
                     android:orientation="horizontal"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
-                    <!-- Left: Brand Identity Block -->
-                    <LinearLayout
+                    <!-- Shield Circular Button -->
+                    <ImageButton
+                        android:id="@+id/btnTopShield"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:background="@drawable/bg_circle_icon_button"
+                        android:contentDescription="Toggle Ad Shield"
+                        android:focusable="true"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_ref_shield"
+                        android:nextFocusLeft="@+id/inputUrlOrSearch"
+                        android:nextFocusRight="@+id/btnTopTheme"
+                        android:nextFocusDown="@+id/btnTileShield" />
+
+                    <!-- Theme / Settings Circular Button -->
+                    <ImageButton
+                        android:id="@+id/btnTopTheme"
+                        android:layout_width="40dp"
+                        android:layout_height="40dp"
+                        android:layout_marginStart="10dp"
+                        android:background="@drawable/bg_circle_icon_button"
+                        android:contentDescription="Theme and Settings"
+                        android:focusable="true"
+                        android:padding="9dp"
+                        android:src="@drawable/ic_ref_sun"
+                        android:nextFocusLeft="@+id/btnTopShield"
+                        android:nextFocusDown="@+id/btnTilePointer" />
+
+                    <!-- Live Digital Clock -->
+                    <TextClock
+                        android:id="@+id/clockHome"
                         android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginStart="16dp"
+                        android:format12Hour="h:mm a"
+                        android:format24Hour="HH:mm"
+                        android:textColor="@color/text_secondary"
+                        android:textSize="13sp"
+                        android:textStyle="bold"
+                        android:fontFamily="sans-serif-medium" />
+                </LinearLayout>
+            </LinearLayout>
+
+            <!-- 2. Hero & Controls Section (Horizontal Split: Hero Continue Card 60% + 2x2 Control Grid 40%) -->
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:gravity="center_vertical"
+                android:orientation="horizontal"
+                android:clipChildren="false"
+                android:clipToPadding="false">
+
+                <!-- Left: Hero Continue Card (YouTube TV with Resume & Open new tab) -->
+                <LinearLayout
+                    android:id="@+id/cardHeroContinue"
+                    android:layout_width="0dp"
+                    android:layout_height="176dp"
+                    android:layout_weight="60"
+                    android:background="@drawable/bg_hero_card"
+                    android:orientation="vertical"
+                    android:padding="20dp"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Top Row: Icon Badge + Metadata Header -->
+                    <LinearLayout
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal">
 
-                        <ImageView
+                        <!-- YouTube Red Squircle Badge -->
+                        <FrameLayout
                             android:layout_width="44dp"
                             android:layout_height="44dp"
-                            android:layout_marginEnd="14dp"
-                            android:src="@drawable/ic_tv_logo"
-                            tools:ignore="ContentDescription" />
+                            android:background="@drawable/bg_hero_icon_youtube">
+
+                            <ImageView
+                                android:layout_width="26dp"
+                                android:layout_height="26dp"
+                                android:layout_gravity="center"
+                                android:src="@drawable/ic_ott_youtube"
+                                tools:ignore="ContentDescription" />
+                        </FrameLayout>
 
                         <LinearLayout
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
+                            android:layout_marginStart="14dp"
                             android:orientation="vertical">
 
-                            <LinearLayout
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:gravity="center_vertical"
-                                android:orientation="horizontal">
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:text="STREAMSURF"
-                                    android:textColor="@color/text_primary"
-                                    android:textSize="26sp"
-                                    android:textStyle="bold"
-                                    android:letterSpacing="0.08"
-                                    android:fontFamily="sans-serif-black" />
-
-                                <TextView
-                                    android:layout_width="wrap_content"
-                                    android:layout_height="wrap_content"
-                                    android:layout_marginStart="8dp"
-                                    android:background="@drawable/bg_tv_badge"
-                                    android:paddingStart="7dp"
-                                    android:paddingTop="2dp"
-                                    android:paddingEnd="7dp"
-                                    android:paddingBottom="2dp"
-                                    android:text="TV"
-                                    android:textColor="@color/text_secondary"
-                                    android:textSize="11sp"
-                                    android:textStyle="bold"
-                                    android:letterSpacing="0.08" />
-                            </LinearLayout>
+                                android:text="CONTINUE"
+                                android:textColor="@color/accent_primary"
+                                android:textSize="10sp"
+                                android:textStyle="bold"
+                                android:letterSpacing="0.08" />
 
                             <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_marginTop="2dp"
-                                android:text="@string/home_tagline"
+                                android:text="YouTube TV"
+                                android:textColor="@color/text_primary"
+                                android:textSize="18sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:layout_marginTop="2dp"
+                                android:text="Last opened 12 min ago • Signed in"
                                 android:textColor="@color/text_secondary"
-                                android:textSize="12sp"
-                                android:letterSpacing="0.02" />
+                                android:textSize="11sp" />
                         </LinearLayout>
                     </LinearLayout>
 
                     <!-- Spacer -->
                     <View
-                        android:layout_width="0dp"
-                        android:layout_height="1dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1" />
 
-                    <!-- Right: TV Quick Dashboard Action Pills & Digital Clock -->
+                    <!-- Bottom Action Buttons: Resume Pill & Open new tab Pill -->
                     <LinearLayout
-                        android:layout_width="wrap_content"
+                        android:layout_width="match_parent"
                         android:layout_height="wrap_content"
                         android:gravity="center_vertical"
                         android:orientation="horizontal"
                         android:clipChildren="false"
                         android:clipToPadding="false">
 
-                        <!-- AdBlock Shield Status Pill -->
+                        <!-- Resume Button in Signature Mint -->
                         <LinearLayout
-                            android:id="@+id/btnHomeShield"
+                            android:id="@+id/btnHeroResume"
                             android:layout_width="wrap_content"
                             android:layout_height="38dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_header_pill_selector"
+                            android:background="@drawable/bg_pill_resume"
                             android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="14dp"
-                            android:nextFocusDown="@+id/inputUrlOrSearch"
-                            android:nextFocusRight="@+id/btnHomeNextDns">
-
-                            <ImageView
-                                android:id="@+id/imgHomeShieldDot"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:src="@drawable/ic_status_dot_green"
-                                tools:ignore="ContentDescription" />
-
-                            <ImageView
-                                android:id="@+id/imgHomeShieldIcon"
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginEnd="6dp"
-                                android:src="@drawable/ic_nav_shield"
-                                tools:ignore="ContentDescription" />
-
-                            <TextView
-                                android:id="@+id/tvHomeShieldStatus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/home_shield_active"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <!-- NextDNS Quick Pill -->
-                        <LinearLayout
-                            android:id="@+id/btnHomeNextDns"
-                            android:layout_width="wrap_content"
-                            android:layout_height="38dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_header_pill_selector"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="14dp"
-                            android:nextFocusLeft="@+id/btnHomeShield"
-                            android:nextFocusRight="@+id/btnHomeBookmarks"
-                            android:nextFocusDown="@+id/inputUrlOrSearch">
-
-                            <ImageView
-                                android:id="@+id/imgHomeNextDnsDot"
-                                android:layout_width="8dp"
-                                android:layout_height="8dp"
-                                android:layout_marginEnd="8dp"
-                                android:src="@drawable/ic_status_dot_red"
-                                tools:ignore="ContentDescription" />
-
-                            <ImageView
-                                android:id="@+id/imgHomeNextDnsIcon"
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginEnd="6dp"
-                                android:src="@drawable/ic_nav_dns"
-                                tools:ignore="ContentDescription" />
-
-                            <TextView
-                                android:id="@+id/tvHomeNextDnsStatus"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="NextDNS"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <!-- Bookmarks Quick Pill -->
-                        <LinearLayout
-                            android:id="@+id/btnHomeBookmarks"
-                            android:layout_width="wrap_content"
-                            android:layout_height="38dp"
-                            android:layout_marginEnd="10dp"
-                            android:background="@drawable/bg_header_pill_selector"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="14dp"
-                            android:nextFocusLeft="@+id/btnHomeNextDns"
-                            android:nextFocusRight="@+id/btnHomeQrLogin"
-                            android:nextFocusDown="@+id/inputUrlOrSearch">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginEnd="6dp"
-                                android:src="@drawable/ic_nav_bookmark_filled"
-                                tools:ignore="ContentDescription" />
-
-                            <TextView
-                                android:id="@+id/tvHomeBookmarksCount"
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/home_bookmarks"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <!-- Phone Sign-In / QR Pill -->
-                        <LinearLayout
-                            android:id="@+id/btnHomeQrLogin"
-                            android:layout_width="wrap_content"
-                            android:layout_height="38dp"
-                            android:layout_marginEnd="14dp"
-                            android:background="@drawable/bg_header_pill_selector"
-                            android:focusable="true"
-                            android:gravity="center_vertical"
-                            android:orientation="horizontal"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="14dp"
-                            android:nextFocusLeft="@+id/btnHomeBookmarks"
-                            android:nextFocusRight="@+id/btnHomeBookmarks"
-                            android:nextFocusDown="@+id/btnGo">
-
-                            <ImageView
-                                android:layout_width="16dp"
-                                android:layout_height="16dp"
-                                android:layout_marginEnd="6dp"
-                                android:src="@drawable/ic_nav_qr"
-                                tools:ignore="ContentDescription" />
-
-                            <TextView
-                                android:layout_width="wrap_content"
-                                android:layout_height="wrap_content"
-                                android:text="@string/home_phone_signin"
-                                android:textColor="@color/text_primary"
-                                android:textSize="12sp"
-                                android:textStyle="bold" />
-                        </LinearLayout>
-
-                        <!-- Live Digital Clock -->
-                        <LinearLayout
-                            android:layout_width="wrap_content"
-                            android:layout_height="38dp"
-                            android:background="@drawable/bg_tv_badge"
                             android:gravity="center"
-                            android:paddingStart="12dp"
-                            android:paddingEnd="12dp">
+                            android:orientation="horizontal"
+                            android:paddingStart="18dp"
+                            android:paddingEnd="18dp"
+                            android:nextFocusUp="@+id/inputUrlOrSearch"
+                            android:nextFocusRight="@+id/btnHeroNewTab"
+                            android:nextFocusDown="@+id/tileYoutube">
 
-                            <TextClock
-                                android:id="@+id/clockHome"
+                            <ImageView
+                                android:layout_width="12dp"
+                                android:layout_height="12dp"
+                                android:layout_marginEnd="8dp"
+                                android:src="@drawable/ic_ref_play"
+                                tools:ignore="ContentDescription" />
+
+                            <TextView
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
-                                android:format12Hour="h:mm a"
-                                android:format24Hour="HH:mm"
-                                android:textColor="@color/accent_primary"
+                                android:text="Resume"
+                                android:textColor="#080C0E"
                                 android:textSize="13sp"
-                                android:textStyle="bold"
-                                android:fontFamily="sans-serif-medium" />
+                                android:textStyle="bold" />
+                        </LinearLayout>
+
+                        <!-- Open new tab Dark Pill -->
+                        <LinearLayout
+                            android:id="@+id/btnHeroNewTab"
+                            android:layout_width="wrap_content"
+                            android:layout_height="38dp"
+                            android:layout_marginStart="12dp"
+                            android:background="@drawable/bg_pill_new_tab"
+                            android:focusable="true"
+                            android:gravity="center"
+                            android:orientation="horizontal"
+                            android:paddingStart="16dp"
+                            android:paddingEnd="16dp"
+                            android:nextFocusUp="@+id/inputUrlOrSearch"
+                            android:nextFocusLeft="@+id/btnHeroResume"
+                            android:nextFocusRight="@+id/btnTileShield"
+                            android:nextFocusDown="@+id/tileYoutube">
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Open new tab"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
                         </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
 
-                <!-- Bottom Row: Smart TV Omnibar (Search / URL Input + Clear Button + Surf Action Button) -->
+                <!-- Right: 2x2 Quick Control Grid (Shield, Pointer, DNS, Sign in by code) -->
                 <LinearLayout
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_marginTop="18dp"
-                    android:gravity="center_vertical"
-                    android:orientation="horizontal"
+                    android:layout_width="0dp"
+                    android:layout_height="176dp"
+                    android:layout_marginStart="16dp"
+                    android:layout_weight="40"
+                    android:orientation="vertical"
                     android:clipChildren="false"
                     android:clipToPadding="false">
 
+                    <!-- Grid Row 1: Shield & Pointer Mode -->
                     <LinearLayout
-                        android:id="@+id/searchBarLayout"
-                        android:layout_width="0dp"
-                        android:layout_height="54dp"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
                         android:layout_weight="1"
-                        android:background="@drawable/bg_search_capsule_selector"
-                        android:focusable="false"
-                        android:gravity="center_vertical"
                         android:orientation="horizontal"
-                        android:paddingStart="20dp"
-                        android:paddingEnd="16dp">
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
-                        <ImageView
-                            android:layout_width="22dp"
-                            android:layout_height="22dp"
-                            android:src="@drawable/ic_search"
-                            tools:ignore="ContentDescription" />
-
-                        <EditText
-                            android:id="@+id/inputUrlOrSearch"
+                        <!-- 1. Shield Control Tile -->
+                        <LinearLayout
+                            android:id="@+id/btnTileShield"
                             android:layout_width="0dp"
                             android:layout_height="match_parent"
-                            android:layout_marginStart="14dp"
-                            android:layout_marginEnd="8dp"
                             android:layout_weight="1"
-                            android:background="@null"
-                            android:hint="@string/search_hint"
-                            android:imeOptions="actionGo"
-                            android:inputType="textUri"
-                            android:singleLine="true"
-                            android:textColor="@color/text_primary"
-                            android:textColorHint="@color/text_muted"
-                            android:textSize="17sp"
-                            android:fontFamily="sans-serif"
+                            android:background="@drawable/bg_action_tile_selector"
                             android:focusable="true"
-                            android:nextFocusUp="@+id/btnHomeShield"
-                            android:nextFocusRight="@+id/btnClearSearch"
-                            android:nextFocusDown="@+id/tileTvYoutube" />
+                            android:orientation="vertical"
+                            android:padding="11dp"
+                            android:nextFocusUp="@+id/btnTopShield"
+                            android:nextFocusLeft="@+id/btnHeroNewTab"
+                            android:nextFocusRight="@+id/btnTilePointer"
+                            android:nextFocusDown="@+id/btnTileDns">
 
-                        <ImageView
-                            android:id="@+id/btnClearSearch"
-                            android:layout_width="32dp"
-                            android:layout_height="32dp"
-                            android:background="@drawable/bg_nav_btn_selector"
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imgTileShieldIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_ref_shield"
+                                    tools:ignore="ContentDescription" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/tvTileShieldStatus"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="ON"
+                                    android:textColor="@color/accent_primary"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Shield"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Ad &amp; Tracker Blocker"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- 2. Pointer Mode Control Tile -->
+                        <LinearLayout
+                            android:id="@+id/btnTilePointer"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_action_tile_selector"
                             android:focusable="true"
-                            android:padding="6dp"
-                            android:src="@drawable/ic_clear"
-                            android:visibility="gone"
-                            android:nextFocusUp="@+id/btnHomeBookmarks"
-                            android:nextFocusLeft="@+id/inputUrlOrSearch"
-                            android:nextFocusRight="@+id/btnGo"
-                            android:nextFocusDown="@+id/tileTvYoutube"
-                            tools:ignore="ContentDescription" />
+                            android:orientation="vertical"
+                            android:padding="11dp"
+                            android:nextFocusUp="@+id/btnTopTheme"
+                            android:nextFocusLeft="@+id/btnTileShield"
+                            android:nextFocusDown="@+id/btnTileSignInCode">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imgTilePointerIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_ref_pointer"
+                                    tools:ignore="ContentDescription" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/tvTilePointerStatus"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="OFF"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Pointer mode"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Virtual TV Mouse"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
                     </LinearLayout>
 
-                    <!-- Surf / Go Action Button -->
+                    <!-- Grid Row 2: DNS Settings & Sign in by Code -->
                     <LinearLayout
-                        android:id="@+id/btnGo"
-                        android:layout_width="114dp"
-                        android:layout_height="54dp"
-                        android:layout_marginStart="14dp"
-                        android:background="@drawable/bg_surf_button_selector"
-                        android:focusable="true"
-                        android:gravity="center"
+                        android:layout_width="match_parent"
+                        android:layout_height="0dp"
+                        android:layout_marginTop="10dp"
+                        android:layout_weight="1"
                         android:orientation="horizontal"
-                        android:nextFocusUp="@+id/btnHomeQrLogin"
-                        android:nextFocusLeft="@+id/btnClearSearch"
-                        android:nextFocusDown="@+id/tileTvYoutube">
+                        android:clipChildren="false"
+                        android:clipToPadding="false">
 
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:text="@string/btn_go"
-                            android:textColor="@color/text_primary"
-                            android:textSize="16sp"
-                            android:textStyle="bold"
-                            android:letterSpacing="0.04" />
+                        <!-- 3. DNS Settings Tile -->
+                        <LinearLayout
+                            android:id="@+id/btnTileDns"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_action_tile_selector"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:padding="11dp"
+                            android:nextFocusUp="@+id/btnTileShield"
+                            android:nextFocusLeft="@+id/btnHeroNewTab"
+                            android:nextFocusRight="@+id/btnTileSignInCode"
+                            android:nextFocusDown="@+id/tileNetflix">
 
-                        <ImageView
-                            android:layout_width="18dp"
-                            android:layout_height="18dp"
-                            android:layout_marginStart="6dp"
-                            android:src="@drawable/ic_surf_arrow"
-                            tools:ignore="ContentDescription" />
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:id="@+id/imgTileDnsIcon"
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_ref_dns"
+                                    tools:ignore="ContentDescription" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:id="@+id/tvTileDnsStatus"
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="NextDNS"
+                                    android:textColor="@color/accent_primary"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="DNS settings"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Encrypted DoH"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
+
+                        <!-- 4. Sign in by Code Tile -->
+                        <LinearLayout
+                            android:id="@+id/btnTileSignInCode"
+                            android:layout_width="0dp"
+                            android:layout_height="match_parent"
+                            android:layout_marginStart="10dp"
+                            android:layout_weight="1"
+                            android:background="@drawable/bg_action_tile_selector"
+                            android:focusable="true"
+                            android:orientation="vertical"
+                            android:padding="11dp"
+                            android:nextFocusUp="@+id/btnTilePointer"
+                            android:nextFocusLeft="@+id/btnTileDns"
+                            android:nextFocusDown="@+id/tileDisney">
+
+                            <LinearLayout
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:gravity="center_vertical"
+                                android:orientation="horizontal">
+
+                                <ImageView
+                                    android:layout_width="18dp"
+                                    android:layout_height="18dp"
+                                    android:src="@drawable/ic_ref_tv"
+                                    tools:ignore="ContentDescription" />
+
+                                <View
+                                    android:layout_width="0dp"
+                                    android:layout_height="1dp"
+                                    android:layout_weight="1" />
+
+                                <TextView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="wrap_content"
+                                    android:text="CODES"
+                                    android:textColor="@color/text_secondary"
+                                    android:textSize="10sp"
+                                    android:textStyle="bold" />
+                            </LinearLayout>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="0dp"
+                                android:layout_weight="1" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Sign in by code"
+                                android:textColor="@color/text_primary"
+                                android:textSize="13sp"
+                                android:textStyle="bold" />
+
+                            <TextView
+                                android:layout_width="wrap_content"
+                                android:layout_height="wrap_content"
+                                android:text="Scan QR or code"
+                                android:textColor="@color/text_secondary"
+                                android:textSize="10sp" />
+                        </LinearLayout>
                     </LinearLayout>
                 </LinearLayout>
             </LinearLayout>
 
-            <!-- Section 0: MY BOOKMARKS (User Saved Pages) -->
+            <!-- 3. Streaming Shelf -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="24dp"
+                android:text="Streaming"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03" />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollShelfStreaming"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- YouTube (Coral Focused Ring as in Reference Design) -->
+                    <LinearLayout
+                        android:id="@+id/tileYoutube"
+                        android:layout_width="145dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_shelf_card_coral_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnHeroResume"
+                        android:nextFocusRight="@+id/tilePrime"
+                        android:nextFocusDown="@+id/tileRecentWiki">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ott_youtube"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="YouTube"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Desktop Web"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Prime Video -->
+                    <LinearLayout
+                        android:id="@+id/tilePrime"
+                        android:layout_width="145dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_action_tile_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnHeroResume"
+                        android:nextFocusLeft="@+id/tileYoutube"
+                        android:nextFocusRight="@+id/tileHotstar"
+                        android:nextFocusDown="@+id/tileRecentHN">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ott_prime"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Prime Video"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Desktop Web"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Hotstar -->
+                    <LinearLayout
+                        android:id="@+id/tileHotstar"
+                        android:layout_width="145dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_action_tile_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnTileShield"
+                        android:nextFocusLeft="@+id/tilePrime"
+                        android:nextFocusRight="@+id/tileNetflix"
+                        android:nextFocusDown="@+id/tileRecentGithub">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ott_hotstar"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Hotstar"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Desktop Web"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Netflix -->
+                    <LinearLayout
+                        android:id="@+id/tileNetflix"
+                        android:layout_width="145dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_action_tile_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnTileDns"
+                        android:nextFocusLeft="@+id/tileHotstar"
+                        android:nextFocusRight="@+id/tileDisney"
+                        android:nextFocusDown="@+id/tileRecentCricbuzz">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ott_netflix"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Netflix"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Desktop Web"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Disney+ -->
+                    <LinearLayout
+                        android:id="@+id/tileDisney"
+                        android:layout_width="145dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_action_tile_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnTileSignInCode"
+                        android:nextFocusLeft="@+id/tileNetflix"
+                        android:nextFocusRight="@+id/tileAddShortcut"
+                        android:nextFocusDown="@+id/tileRecentBbc">
+
+                        <ImageView
+                            android:layout_width="32dp"
+                            android:layout_height="32dp"
+                            android:src="@drawable/ic_ott_disney"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Disney+"
+                            android:textColor="@color/text_primary"
+                            android:textSize="14sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Desktop Web"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Add Shortcut Button -->
+                    <LinearLayout
+                        android:id="@+id/tileAddShortcut"
+                        android:layout_width="110dp"
+                        android:layout_height="114dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_action_tile_selector"
+                        android:focusable="true"
+                        android:gravity="center"
+                        android:orientation="vertical"
+                        android:padding="10dp"
+                        android:nextFocusUp="@+id/btnTileSignInCode"
+                        android:nextFocusLeft="@+id/tileDisney"
+                        android:nextFocusDown="@+id/tileRecentEspn">
+
+                        <ImageView
+                            android:layout_width="26dp"
+                            android:layout_height="26dp"
+                            android:src="@drawable/ic_ref_plus"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:text="Add"
+                            android:textColor="@color/text_primary"
+                            android:textSize="13sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="2dp"
+                            android:text="Shortcut"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- 4. Recent and Pinned Shelf -->
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="22dp"
+                android:text="Recent and pinned"
+                android:textColor="@color/text_primary"
+                android:textSize="14sp"
+                android:textStyle="bold"
+                android:letterSpacing="0.03" />
+
+            <HorizontalScrollView
+                android:id="@+id/scrollShelfRecent"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="10dp"
+                android:clipChildren="false"
+                android:clipToPadding="false"
+                android:overScrollMode="never"
+                android:scrollbars="none">
+
+                <LinearLayout
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    android:clipChildren="false"
+                    android:clipToPadding="false">
+
+                    <!-- Wikipedia -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentWiki"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tileYoutube"
+                        android:nextFocusRight="@+id/tileRecentHN">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="wikipedia.org"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Encyclopedia"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Hacker News -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentHN"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tilePrime"
+                        android:nextFocusLeft="@+id/tileRecentWiki"
+                        android:nextFocusRight="@+id/tileRecentGithub">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="ycombinator.com"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Tech News"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- GitHub -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentGithub"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tileHotstar"
+                        android:nextFocusLeft="@+id/tileRecentHN"
+                        android:nextFocusRight="@+id/tileRecentCricbuzz">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="github.com"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Open Source"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- Cricbuzz -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentCricbuzz"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tileNetflix"
+                        android:nextFocusLeft="@+id/tileRecentGithub"
+                        android:nextFocusRight="@+id/tileRecentBbc">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="cricbuzz.com"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Cricket Scores"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- BBC News -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentBbc"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tileDisney"
+                        android:nextFocusLeft="@+id/tileRecentCricbuzz"
+                        android:nextFocusRight="@+id/tileRecentEspn">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="bbc.com/news"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="World News"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+
+                    <!-- ESPN -->
+                    <LinearLayout
+                        android:id="@+id/tileRecentEspn"
+                        android:layout_width="145dp"
+                        android:layout_height="90dp"
+                        android:layout_marginEnd="12dp"
+                        android:background="@drawable/bg_recent_card_selector"
+                        android:focusable="true"
+                        android:gravity="center_vertical"
+                        android:orientation="vertical"
+                        android:padding="12dp"
+                        android:nextFocusUp="@+id/tileAddShortcut"
+                        android:nextFocusLeft="@+id/tileRecentBbc">
+
+                        <ImageView
+                            android:layout_width="20dp"
+                            android:layout_height="20dp"
+                            android:src="@drawable/ic_ref_globe"
+                            tools:ignore="ContentDescription" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="8dp"
+                            android:ellipsize="end"
+                            android:maxLines="1"
+                            android:text="espn.com"
+                            android:textColor="@color/text_primary"
+                            android:textSize="12sp"
+                            android:textStyle="bold" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:text="Sports"
+                            android:textColor="@color/text_secondary"
+                            android:textSize="10sp" />
+                    </LinearLayout>
+                </LinearLayout>
+            </HorizontalScrollView>
+
+            <!-- 5. User Saved Bookmarks Shelf (Visible when user bookmarks exist) -->
             <LinearLayout
                 android:id="@+id/sectionBookmarksHeader"
                 android:layout_width="match_parent"
@@ -408,13 +1168,14 @@
                 android:visibility="gone">
 
                 <TextView
+                    android:id="@+id/tvHomeBookmarksCount"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:text="Bookmarks"
                     android:textColor="@color/text_primary"
                     android:textSize="14sp"
                     android:textStyle="bold"
-                    android:letterSpacing="0.04" />
+                    android:letterSpacing="0.03" />
 
                 <TextView
                     android:layout_width="wrap_content"
@@ -422,7 +1183,7 @@
                     android:layout_marginStart="10dp"
                     android:text="• Saved web pages"
                     android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
+                    android:textSize="11sp" />
             </LinearLayout>
 
             <HorizontalScrollView
@@ -445,873 +1206,9 @@
                     android:orientation="horizontal" />
             </HorizontalScrollView>
 
-            <!-- Section 1: EASY TV LOGIN & QR ACTIVATE (NO TYPING ON REMOTE) -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:gravity="center_vertical"
-                android:orientation="horizontal">
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:text="Quick TV Sign-In"
-                    android:textColor="@color/text_primary"
-                    android:textSize="14sp"
-                    android:textStyle="bold"
-                    android:letterSpacing="0.04" />
-
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="10dp"
-                    android:text="• Scan QR or phone code"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="12sp" />
-            </LinearLayout>
-
-            <HorizontalScrollView
-                android:id="@+id/scrollShelfQr"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal">
-
-                    <!-- YouTube TV (QR / Activate) -->
-                    <LinearLayout
-                        android:id="@+id/tileTvYoutube"
-                        android:layout_width="160dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/inputUrlOrSearch"
-                        android:nextFocusDown="@+id/tileYoutube"
-                        android:nextFocusRight="@+id/tileTvPrime">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_youtube"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="YouTube TV"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="QR Code Sign-In"
-                            android:textColor="@color/accent_primary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Prime Video (mytv Code) -->
-                    <LinearLayout
-                        android:id="@+id/tileTvPrime"
-                        android:layout_width="160dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/inputUrlOrSearch"
-                        android:nextFocusDown="@+id/tilePrime"
-                        android:nextFocusLeft="@+id/tileTvYoutube"
-                        android:nextFocusRight="@+id/tileTvHotstar">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_prime"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Prime Video TV"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="mytv Code Sign-In"
-                            android:textColor="@color/accent_primary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Hotstar (QR Login) -->
-                    <LinearLayout
-                        android:id="@+id/tileTvHotstar"
-                        android:layout_width="160dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/inputUrlOrSearch"
-                        android:nextFocusDown="@+id/tileHotstar"
-                        android:nextFocusLeft="@+id/tileTvPrime"
-                        android:nextFocusRight="@+id/tileTvDisney">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_hotstar"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Hotstar QR"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Scan with Phone App"
-                            android:textColor="@color/accent_primary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Disney+ (begin Code) -->
-                    <LinearLayout
-                        android:id="@+id/tileTvDisney"
-                        android:layout_width="160dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/inputUrlOrSearch"
-                        android:nextFocusDown="@+id/tileDisney"
-                        android:nextFocusLeft="@+id/tileTvHotstar"
-                        android:nextFocusRight="@+id/tileTvNetflix">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_disney"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Disney+ Begin"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="8-Digit Code Sign-In"
-                            android:textColor="@color/accent_primary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- Netflix TV (tv8 Code) -->
-                    <LinearLayout
-                        android:id="@+id/tileTvNetflix"
-                        android:layout_width="160dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/inputUrlOrSearch"
-                        android:nextFocusDown="@+id/tileNetflix"
-                        android:nextFocusLeft="@+id/tileTvDisney">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_netflix"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Netflix TV"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="TV Code Sign-In"
-                            android:textColor="@color/accent_primary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- Section 2: POPULAR MOVIES & STREAMING (FULL DESKTOP WEB APPS) -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="22dp"
-                android:text="Streaming &amp; Web Apps"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.04" />
-
-            <HorizontalScrollView
-                android:id="@+id/scrollShelf1"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal">
-
-                    <!-- 1. YouTube Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileYoutube"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvYoutube"
-                        android:nextFocusDown="@+id/tileHulu"
-                        android:nextFocusRight="@+id/tileNetflix">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_youtube"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="YouTube"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Desktop Web"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 2. Netflix Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileNetflix"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvNetflix"
-                        android:nextFocusDown="@+id/tileSpotify"
-                        android:nextFocusLeft="@+id/tileYoutube"
-                        android:nextFocusRight="@+id/tilePrime">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_netflix"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Netflix"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Desktop Web"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 3. Prime Video Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tilePrime"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvPrime"
-                        android:nextFocusDown="@+id/tileTwitch"
-                        android:nextFocusLeft="@+id/tileNetflix"
-                        android:nextFocusRight="@+id/tileDisney">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_prime"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Prime Video"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Desktop Web"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 4. Disney+ Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileDisney"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvDisney"
-                        android:nextFocusDown="@+id/tileCrunchyroll"
-                        android:nextFocusLeft="@+id/tilePrime"
-                        android:nextFocusRight="@+id/tileHotstar">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_disney"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Disney+"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Desktop Web"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 5. Hotstar Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileHotstar"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvHotstar"
-                        android:nextFocusDown="@+id/tileJioCinema"
-                        android:nextFocusLeft="@+id/tileDisney"
-                        android:nextFocusRight="@+id/tileApple">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_hotstar"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Hotstar"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="Desktop Web"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 6. Apple TV+ Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileApple"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvDisney"
-                        android:nextFocusDown="@+id/tilePeacock"
-                        android:nextFocusLeft="@+id/tileHotstar"
-                        android:nextFocusRight="@+id/tileMax">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_apple"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Apple TV+"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="tv.apple.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 7. Max Desktop -->
-                    <LinearLayout
-                        android:id="@+id/tileMax"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileTvNetflix"
-                        android:nextFocusDown="@+id/tileDuckDuckGo"
-                        android:nextFocusLeft="@+id/tileApple">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_max"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Max"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="max.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- Section 3: ANIME, MUSIC & MEDIA APPS -->
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
-                android:text="Media &amp; Search"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                android:textStyle="bold"
-                android:letterSpacing="0.04" />
-
-            <HorizontalScrollView
-                android:id="@+id/scrollShelf2"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="10dp"
-                android:clipChildren="false"
-                android:clipToPadding="false"
-                android:overScrollMode="never"
-                android:scrollbars="none">
-
-                <LinearLayout
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:clipChildren="false"
-                    android:clipToPadding="false"
-                    android:orientation="horizontal">
-
-                    <!-- 8. Hulu -->
-                    <LinearLayout
-                        android:id="@+id/tileHulu"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileYoutube"
-                        android:nextFocusRight="@+id/tileSpotify">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_hulu"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Hulu"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="hulu.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 9. Spotify -->
-                    <LinearLayout
-                        android:id="@+id/tileSpotify"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileNetflix"
-                        android:nextFocusLeft="@+id/tileHulu"
-                        android:nextFocusRight="@+id/tileTwitch">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_spotify"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Spotify"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="open.spotify.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 10. Twitch -->
-                    <LinearLayout
-                        android:id="@+id/tileTwitch"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tilePrime"
-                        android:nextFocusLeft="@+id/tileSpotify"
-                        android:nextFocusRight="@+id/tileCrunchyroll">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_twitch"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Twitch"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="twitch.tv"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 11. Crunchyroll -->
-                    <LinearLayout
-                        android:id="@+id/tileCrunchyroll"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileDisney"
-                        android:nextFocusLeft="@+id/tileTwitch"
-                        android:nextFocusRight="@+id/tileJioCinema">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_crunchyroll"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Crunchyroll"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="crunchyroll.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 12. JioCinema -->
-                    <LinearLayout
-                        android:id="@+id/tileJioCinema"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileHotstar"
-                        android:nextFocusLeft="@+id/tileCrunchyroll"
-                        android:nextFocusRight="@+id/tilePeacock">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_jiocinema"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="JioCinema"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="jiocinema.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 13. Peacock -->
-                    <LinearLayout
-                        android:id="@+id/tilePeacock"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileApple"
-                        android:nextFocusLeft="@+id/tileJioCinema"
-                        android:nextFocusRight="@+id/tileDuckDuckGo">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_ott_peacock"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="Peacock"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="peacocktv.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                    <!-- 14. DuckDuckGo -->
-                    <LinearLayout
-                        android:id="@+id/tileDuckDuckGo"
-                        android:layout_width="155dp"
-                        android:layout_height="125dp"
-                        android:layout_marginEnd="14dp"
-                        android:background="@drawable/bg_tile_selector"
-                        android:focusable="true"
-                        android:gravity="center"
-                        android:orientation="vertical"
-                        android:padding="10dp"
-                        android:nextFocusUp="@+id/tileMax"
-                        android:nextFocusLeft="@+id/tilePeacock">
-
-                        <ImageView
-                            android:layout_width="38dp"
-                            android:layout_height="38dp"
-                            android:src="@drawable/ic_search"
-                            tools:ignore="ContentDescription" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="8dp"
-                            android:text="DuckDuckGo"
-                            android:textColor="@color/text_primary"
-                            android:textSize="15sp"
-                            android:textStyle="bold" />
-
-                        <TextView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
-                            android:layout_marginTop="2dp"
-                            android:text="duckduckgo.com"
-                            android:textColor="@color/text_secondary"
-                            android:textSize="11sp" />
-                    </LinearLayout>
-
-                </LinearLayout>
-            </HorizontalScrollView>
-
-            <!-- Status & Tip Bar -->
-            <TextView
-                android:id="@+id/tvHomeTip"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginTop="24dp"
-                android:text="Tip: Use Top Row for instant QR Code phone sign-in. Press BACK on any page to return."
-                android:textColor="@color/text_muted"
-                android:textSize="13sp" />
-
         </LinearLayout>
     </ScrollView>
+
 
     <!-- 2. BROWSER CONTAINER (Active WebView + Top Toolbar) -->
     <LinearLayout

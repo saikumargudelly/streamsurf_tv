@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<vector xmlns:android="http://schemas.android.com/apk/res/android"
+    android:width="36dp"
+    android:height="36dp"
+    android:viewportWidth="36"
+    android:viewportHeight="36">
+    <!-- Squircle Background in signature Mint -->
+    <path
+        android:fillColor="#2DE0A5"
+        android:pathData="M11,3 L25,3 A8,8 0 0,1 33,11 L33,25 A8,8 0 0,1 25,33 L11,33 A8,8 0 0,1 3,25 L3,11 A8,8 0 0,1 11,3 Z" />
+    <!-- Sleek Twin Wave Marks in Dark Obsidian -->
+    <path
+        android:strokeColor="#080C0E"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M11,15 C13.5,12.5 16.5,12.5 18.5,15 C20.5,17.5 23.5,17.5 25,15" />
+    <path
+        android:strokeColor="#080C0E"
+        android:strokeWidth="2.4"
+        android:strokeLineCap="round"
+        android:strokeLineJoin="round"
+        android:pathData="M11,21 C13.5,18.5 16.5,18.5 18.5,21 C20.5,23.5 23.5,23.5 25,21" />
+</vector>
