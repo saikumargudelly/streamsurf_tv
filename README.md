@@ -37,6 +37,40 @@ Download the ready-to-install signed production APK directly to your computer or
 
 ---
 
+## 🎬 UI / UX Showcase
+
+<div align="center">
+
+### 1. Remote-First 10-Foot TV Interface & Fluid Navigation
+Fluid D-pad focus indicators, safe overscan margins, and quick launchpads designed for television remote controls.
+
+![TV Home & Remote Navigation](docs/assets/demo_tv_navigation.gif)
+
+<br>
+
+### 2. Built-in Private DNS & Custom NextDNS Setup
+Enter your manual NextDNS configuration ID or select secure DoH resolvers (Cloudflare, AdGuard, Quad9) directly on your TV.
+
+![Custom NextDNS Configuration](docs/assets/demo_nextdns_setup.gif)
+
+<br>
+
+### 3. Zero-Stall Streaming Media & Ad-Block Immunity
+Smart media segment (`.m3u8`, `.mpd`, `.ts`, `.mp4`) pass-through ensures uninterrupted 4K/1080p playback without false-positive ad-blocking buffering.
+
+![HD Video Streaming Playback](docs/assets/demo_video_streaming.gif)
+
+<br>
+
+### 4. YouTube TV & Leanback Media Player
+Seamless Leanback TV navigation and full remote control integration across desktop & TV web apps.
+
+![YouTube TV Leanback Navigation](docs/assets/demo_youtube_tv.gif)
+
+</div>
+
+---
+
 ## Key Highlights
 
 - 🛡️ **Veyra Shield Ad-Blocker**  
