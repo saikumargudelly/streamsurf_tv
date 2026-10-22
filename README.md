@@ -8,10 +8,6 @@
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
 [![Architecture](https://img.shields.io/badge/Architecture-Single--WebView%20%7C%20Low--RAM-orange)](https://github.com/saikumargudelly/streamsuf_tv)
 
-```
-Topics: android-tv, google-tv, tv-browser, privacy-browser, adblocker, nextdns, dns-over-https, leanback, smart-tv, kotlin
-```
-
 ---
 
 ## Overview
