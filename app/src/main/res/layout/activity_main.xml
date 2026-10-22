@@ -1223,18 +1223,19 @@
             android:id="@+id/navToolbar"
             android:layout_width="match_parent"
             android:layout_height="52dp"
-            android:background="@color/bg_surface"
+            android:background="@color/bg_dark"
             android:gravity="center_vertical"
             android:clipChildren="false"
             android:clipToPadding="false"
-            android:paddingStart="20dp"
-            android:paddingEnd="20dp"
+            android:paddingStart="16dp"
+            android:paddingEnd="16dp"
             android:orientation="horizontal">
 
+            <!-- 1. Left Navigation Controls -->
             <ImageButton
                 android:id="@+id/btnNavBack"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="@string/nav_back"
@@ -1245,10 +1246,10 @@
 
             <ImageButton
                 android:id="@+id/btnNavForward"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="@string/nav_forward"
                 android:focusable="true"
@@ -1259,10 +1260,10 @@
 
             <ImageButton
                 android:id="@+id/btnNavReload"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="@string/nav_reload"
                 android:focusable="true"
@@ -1273,38 +1274,75 @@
 
             <ImageButton
                 android:id="@+id/btnNavHome"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="@string/nav_home"
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavReload"
-                android:nextFocusRight="@+id/btnNavPointer"
+                android:nextFocusRight="@+id/tvCurrentUrl"
                 android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_home" />
 
+            <!-- 2. Center Omnibar Address Capsule -->
+            <TextView
+                android:id="@+id/tvCurrentUrl"
+                android:layout_width="0dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="14dp"
+                android:layout_marginEnd="10dp"
+                android:layout_weight="1"
+                android:background="@drawable/bg_search_capsule_bar"
+                android:ellipsize="middle"
+                android:focusable="true"
+                android:gravity="center_vertical"
+                android:paddingStart="16dp"
+                android:paddingEnd="16dp"
+                android:singleLine="true"
+                android:textColor="@color/text_primary"
+                android:textSize="13sp"
+                android:nextFocusLeft="@+id/btnNavHome"
+                android:nextFocusRight="@+id/btnNavBookmark"
+                android:nextFocusDown="@+id/activeWebView"
+                tools:text="https://duckduckgo.com" />
+
+            <!-- Bookmark Button -->
+            <ImageButton
+                android:id="@+id/btnNavBookmark"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
+                android:padding="8dp"
+                android:background="@drawable/bg_nav_btn_selector"
+                android:contentDescription="@string/nav_bookmark"
+                android:focusable="true"
+                android:nextFocusLeft="@+id/tvCurrentUrl"
+                android:nextFocusRight="@+id/btnNavPointer"
+                android:nextFocusDown="@+id/activeWebView"
+                android:src="@drawable/ic_nav_bookmark" />
+
+            <!-- 3. Right Quick Controls -->
             <ImageButton
                 android:id="@+id/btnNavPointer"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="Toggle TV Pointer Mode"
                 android:focusable="true"
-                android:nextFocusLeft="@+id/btnNavHome"
+                android:nextFocusLeft="@+id/btnNavBookmark"
                 android:nextFocusRight="@+id/btnNavDesktop"
                 android:nextFocusDown="@+id/activeWebView"
-                android:src="@drawable/ic_nav_cursor" />
+                android:src="@drawable/ic_ref_pointer" />
 
             <ImageButton
                 android:id="@+id/btnNavDesktop"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="8dp"
+                android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="Toggle Desktop Browser Mode"
                 android:focusable="true"
@@ -1313,11 +1351,11 @@
                 android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_desktop" />
 
-            <!-- Zoom Out Button (Magnifier -) -->
+            <!-- Zoom Controls -->
             <ImageButton
                 android:id="@+id/btnNavZoomOut"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="34dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
@@ -1328,12 +1366,11 @@
                 android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_zoom_out" />
 
-            <!-- Zoom Level Badge (Click to reset zoom) -->
             <TextView
                 android:id="@+id/tvNavZoomLevel"
-                android:layout_width="52dp"
-                android:layout_height="match_parent"
-                android:layout_marginStart="4dp"
+                android:layout_width="44dp"
+                android:layout_height="38dp"
+                android:layout_marginStart="2dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="Current Zoom Level (Click to Reset)"
                 android:focusable="true"
@@ -1342,17 +1379,16 @@
                 android:nextFocusRight="@+id/btnNavZoomIn"
                 android:nextFocusDown="@+id/activeWebView"
                 android:textColor="@color/accent_primary"
-                android:textSize="12sp"
+                android:textSize="11sp"
                 android:textStyle="bold"
                 tools:text="115%" />
 
-            <!-- Zoom In Button (Magnifier +) -->
             <ImageButton
                 android:id="@+id/btnNavZoomIn"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="34dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
-                android:layout_marginStart="4dp"
+                android:layout_marginStart="2dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="Zoom In / Magnify Content"
                 android:focusable="true"
@@ -1361,11 +1397,11 @@
                 android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_zoom_in" />
 
-            <!-- In-App Ad Blocker Toggle Shield -->
+            <!-- Shield AdBlock Button -->
             <ImageButton
                 android:id="@+id/btnNavShield"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
@@ -1374,13 +1410,13 @@
                 android:nextFocusLeft="@+id/btnNavZoomIn"
                 android:nextFocusRight="@+id/btnNavNextDns"
                 android:nextFocusDown="@+id/activeWebView"
-                android:src="@drawable/ic_nav_shield" />
+                android:src="@drawable/ic_ref_shield" />
 
-            <!-- NextDNS Manual Configuration Button -->
+            <!-- NextDNS Button -->
             <ImageButton
                 android:id="@+id/btnNavNextDns"
-                android:layout_width="40dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
@@ -1389,57 +1425,21 @@
                 android:nextFocusLeft="@+id/btnNavShield"
                 android:nextFocusRight="@+id/btnNavQrLogin"
                 android:nextFocusDown="@+id/activeWebView"
-                android:src="@drawable/ic_nav_dns" />
+                android:src="@drawable/ic_ref_dns" />
 
-            <!-- New TV QR Code / Easy Phone Login Shortcut -->
+            <!-- TV QR Code Button -->
             <ImageButton
                 android:id="@+id/btnNavQrLogin"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
+                android:layout_width="38dp"
+                android:layout_height="38dp"
                 android:padding="8dp"
                 android:layout_marginStart="6dp"
                 android:background="@drawable/bg_nav_btn_selector"
                 android:contentDescription="TV QR and Code Easy Sign-In"
                 android:focusable="true"
                 android:nextFocusLeft="@+id/btnNavNextDns"
-                android:nextFocusRight="@+id/btnNavBookmark"
                 android:nextFocusDown="@+id/activeWebView"
                 android:src="@drawable/ic_nav_qr" />
-
-            <!-- Add to Bookmarks Button -->
-            <ImageButton
-                android:id="@+id/btnNavBookmark"
-                android:layout_width="44dp"
-                android:layout_height="match_parent"
-                android:padding="8dp"
-                android:layout_marginStart="6dp"
-                android:background="@drawable/bg_nav_btn_selector"
-                android:contentDescription="@string/nav_bookmark"
-                android:focusable="true"
-                android:nextFocusLeft="@+id/btnNavQrLogin"
-                android:nextFocusRight="@+id/tvCurrentUrl"
-                android:nextFocusDown="@+id/activeWebView"
-                android:src="@drawable/ic_nav_bookmark" />
-
-            <!-- Current URL indicator / editable on click -->
-            <TextView
-                android:id="@+id/tvCurrentUrl"
-                android:layout_width="0dp"
-                android:layout_height="38dp"
-                android:layout_marginStart="14dp"
-                android:layout_weight="1"
-                android:background="@drawable/bg_input_selector"
-                android:ellipsize="middle"
-                android:focusable="true"
-                android:gravity="center_vertical"
-                android:nextFocusLeft="@+id/btnNavBookmark"
-                android:nextFocusDown="@+id/activeWebView"
-                android:paddingStart="16dp"
-                android:paddingEnd="16dp"
-                android:singleLine="true"
-                android:textColor="@color/text_primary"
-                android:textSize="14sp"
-                tools:text="https://duckduckgo.com" />
         </LinearLayout>
 
         <!-- Progress Bar -->
