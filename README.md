@@ -2,11 +2,32 @@
 
 > Fast, private, remote-first web browser engineered from the ground up for Android TV and Google TV.
 
-[![Platform](https://img.shields.io/badge/Platform-Android%20TV%20%7C%20Google%20TV-blue?logo=android)](https://github.com/saikumargudelly/streamsuf_tv)
-[![Android](https://img.shields.io/badge/Android-8.0%2B%20%28API%2026%2B%29-3DDC84?logo=android)](https://github.com/saikumargudelly/streamsuf_tv)
+[![Platform](https://img.shields.io/badge/Platform-Android%20TV%20%7C%20Google%20TV-blue?logo=android)](https://github.com/saikumargudelly/streamsurf_tv)
+[![Latest Release](https://img.shields.io/github/v/release/saikumargudelly/streamsurf_tv?color=success&label=Release)](https://github.com/saikumargudelly/streamsurf_tv/releases/latest)
+[![Android](https://img.shields.io/badge/Android-8.0%2B%20%28API%2026%2B%29-3DDC84?logo=android)](https://github.com/saikumargudelly/streamsurf_tv)
 [![Language](https://img.shields.io/badge/Kotlin-1.9.22-7F52FF?logo=kotlin)](https://kotlinlang.org/)
 [![License](https://img.shields.io/badge/License-Apache%202.0-green.svg)](LICENSE)
-[![Architecture](https://img.shields.io/badge/Architecture-Single--WebView%20%7C%20Low--RAM-orange)](https://github.com/saikumargudelly/streamsuf_tv)
+[![Architecture](https://img.shields.io/badge/Architecture-Single--WebView%20%7C%20Low--RAM-orange)](https://github.com/saikumargudelly/streamsurf_tv)
+
+<p align="center">
+  <a href="https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/veyra-tv-release.apk">
+    <img src="https://img.shields.io/badge/⬇️%20Download-Latest%20Release%20APK-2ea44f?style=for-the-badge&logo=android&logoColor=white" alt="Download Latest APK" height="42">
+  </a>
+  <br>
+  <sub>Direct download • <b>veyra-tv-release.apk</b> (Signed production build)</sub>
+</p>
+
+---
+
+## 📥 Download & Releases
+
+Download the ready-to-install signed production APK directly to your computer or Android TV device:
+
+| Release | Package | Architecture | Direct Download |
+|:---|:---|:---|:---|
+| **Latest (`v0.1.0-alpha`)** | `veyra-tv-release.apk` (~4.7 MB) | Universal (ARM64 / ARMv7 / x86_64) | [**⬇️ Download Latest APK**](https://github.com/saikumargudelly/streamsurf_tv/releases/latest/download/veyra-tv-release.apk) |
+
+👉 **[View All Releases & Changelogs](https://github.com/saikumargudelly/streamsurf_tv/releases)**
 
 ---
 
@@ -46,6 +67,21 @@
 
 ---
 
+## Sideloading onto Android TV
+
+```bash
+# 1. Connect to Android TV via ADB
+adb connect <TV-IP-ADDRESS>:5555
+
+# 2. Install the downloaded release APK
+adb install -r veyra-tv-release.apk
+
+# 3. Launch Veyra TV
+adb shell am start -n dev.veyra.tv.browser/dev.veyra.tv.browser.ui.MainActivity
+```
+
+---
+
 ## Build from Source
 
 ### Prerequisites
@@ -55,8 +91,8 @@
 ### Commands
 ```bash
 # Clone the repository
-git clone https://github.com/saikumargudelly/streamsuf_tv.git
-cd streamsuf_tv
+git clone https://github.com/saikumargudelly/streamsurf_tv.git
+cd streamsurf_tv
 
 # Run unit tests
 ./gradlew test
@@ -65,21 +101,6 @@ cd streamsuf_tv
 ./gradlew assembleRelease copyReleaseApkToDist
 ```
 The compiled APK will be output to `dist/veyra-tv-release.apk`.
-
----
-
-## Sideloading onto Android TV
-
-```bash
-# 1. Connect to Android TV via ADB
-adb connect <TV-IP-ADDRESS>:5555
-
-# 2. Install release APK
-adb install -r dist/veyra-tv-release.apk
-
-# 3. Launch Veyra TV
-adb shell am start -n dev.veyra.tv.browser/dev.veyra.tv.browser.ui.MainActivity
-```
 
 ---
 
